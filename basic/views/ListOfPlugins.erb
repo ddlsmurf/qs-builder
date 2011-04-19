@@ -1,0 +1,20 @@
+<%
+categories = {}
+entries_by_name = this.values.sort { |a, b| a.name.downcase <=> b.name.downcase }
+this.each_pair do |id, plug|
+  (plug['categories'] || ["None"]).each {|c| (categories[c] ||= []) << plug}
+end
+%>
+<%=make_table(:caption => "Alphabetical list of plugins", :style => {:class => "wikitable", :cellpadding => "5"}) do
+  columnify 4, entries_by_name.map { |plug| qs_object_link(plug) }
+end%>
+
+===Categories===
+
+<% 
+   keys = categories.keys.sort { |a, b| a.downcase <=> b.downcase }
+   keys.each do |c|
+   list = categories[c].sort { |a, b| a.name.downcase <=> b.name.downcase } %>
+* <%= c %><% list.each do |plug| %>
+** <%=qs_object_link(plug)%><%end%>
+<%end%>

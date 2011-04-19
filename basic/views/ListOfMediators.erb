@@ -1,0 +1,26 @@
+
+<% QS::Registry.registrations("QSRegistryHeaders").each_pair do |mediator_kind, mediator_def| %>
+==<%= mediator_def.name %>==
+Defined by <%= mediator_def.parent.id == QS::BUNDLE_ID ? "''Quicksilver internal''" : qs_object_link(mediator_def.parent, :tech) %>
+<% 
+handlers = QS::Registry.registrations(mediator_kind).sort.map { |id, value| [value.parent, value.name || id] }
+if handlers.empty?
+ %>
+'''Handled nowhere'''
+<% else
+handlers.each do |plugin, name| %>
+* <%= name %> in <%= plugin.id == QS::BUNDLE_ID ? "''Quicksilver internal''" : qs_object_link(plugin, :tech) %><%
+ end
+ end %>
+<% end %>
+
+
+==QSRegistryTables==
+''NB: I dont this is used by Quicksilver''
+
+<% this[:bundles].each do |p| 
+  if p['QSRegistryTables'] %>
+===<%= p.name %>===
+    <pre><%= p['QSRegistryTables'].to_yaml %></pre>
+  <% end 
+end %>

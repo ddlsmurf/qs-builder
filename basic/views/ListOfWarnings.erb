@@ -1,0 +1,32 @@
+=Warnings in plugins=
+<%
+collisions = QS::Registry.collisions
+unless collisions.empty? %>
+==ID Collisions==
+<%
+  collisions.each_pair do |table, entries|
+%>
+===<%= table ? "QSRegistration/#{table}" : "Global objects" %>===
+<%  entries.each_pair do |id, objects| %>
+The id <%= code(id.inspect) %> is declared:
+<%    objects.each do |obj| %>
+* <%= obj.plugin.id == QS::BUNDLE_ID ? "''Quicksilver internal''"  : "Plugin " + qs_object_link(obj.plugin, :tech) %>
+<pre><%= obj.info.to_yaml %></pre>
+<%    end
+    end
+  end
+end
+
+validation_errors = this[:bundles].select { |e| e.misbehaviours }
+if validation_errors.any? { |b| !b.misbehaviours.empty? }
+%>
+==Plugin Info.plist validation==
+<% validation_errors.each do |bundle| %>
+* <%= bundle.id == QS::BUNDLE_ID ? "''Quicksilver internal''"  : "Plugin " + qs_object_link(bundle, :tech) %><%
+    bundle.misbehaviours.each do |e| %>
+** <%= nowiki(e) %><%
+    end%>
+<%
+  end 
+end
+ %>

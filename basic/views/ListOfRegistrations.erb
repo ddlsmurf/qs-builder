@@ -1,0 +1,16 @@
+<%= make_table(:auto_rowspan => true) do
+  column :id
+  column :name
+  column :in
+  header_row ["ID", "Name", "Plugin"]
+  QS::Registry.registration_kinds.sort.each do |kind|
+    header_row [[kind, {:colspan => 3, :align => :left}]]
+    QS::Registry.registrations(kind).sort.sort { |a, b| a[1].parent.id <=> b[1].parent.id }.each do |id, value|
+      parent_item = value.parent
+      row :id => id.empty? ? "''empty string''" : id,
+          :name => value.name.empty? ? "''empty string''" : value.name,
+          :in => parent_item.id == QS::BUNDLE_ID ? "''Quicksilver internal''" : qs_object_link(parent_item, :tech)
+    end
+  end
+end
+%>

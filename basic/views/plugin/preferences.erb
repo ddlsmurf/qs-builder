@@ -1,0 +1,23 @@
+
+==Preference Items==
+
+Activate Quicksilver and press ⌘comma to open [[Preferences]]. Each column represents a page within the main Preferences window. Best practise is to activate the items in the columns from left to right. Bullet points indicate items within the containing item. The items to check are in bold.
+
+{|  class="wikitable"
+| Catalog
+| Preferences
+* Actions
+|-  
+|
+<%= wrap(this.each_catalog_preset.map { |set, depth| ("*" * (depth + 2)) + " #{qs_object_link(set)}" }.join("\n"), "* Catalog\n", "\n") %>
+<%= wrap(this.triggers.map { |obj| "** #{qs_object_link(obj)}" }.join("\n"), "* Triggers\n", "\n") %>
+<%= wrap(this.commands.map { |obj| "** #{qs_object_link(obj)}" }.join("\n"), "* Commands\n", "\n") %>
+<%= wrap(this.proxies.map { |obj| "** #{qs_object_link(obj)}" }.join("\n"), "* Proxies\n", "\n") %>
+<%= wrap(this.internal_objects.map { |obj| "** #{qs_object_link(obj)}" }.join("\n"), "* Internal Objects\n", "\n") %>
+<%= wrap(this.preference_panes.map { |obj| "** #{qs_object_link(obj)}" }.join("\n"), "* Preference Sheets\n", "\n") %>
+<%= wrap(this.ui_controllers.map { |obj| "** #{qs_object_link(obj)}" }.join("\n"), "* Interfaces\n", "\n") %>
+
+| align="up" |
+<%= this.actions.map { |obj| "** #{qs_object_link(obj)}" }.join("\n") %>
+
+|}

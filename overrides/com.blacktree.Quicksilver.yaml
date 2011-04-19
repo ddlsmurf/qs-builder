@@ -1,0 +1,48 @@
+:res:
+  QSKindDescriptions.plist:
+    en:
+      '*': any type
+      # NSStringPboardType: plain text
+      # NSColorPboardType: colors
+      # NSFileContentsPboardType: file contents
+      # NSFilesPromisePboardType: file promises
+      # NSFontPboardType: fonts
+      # NSHTMLPboardType: HTML content
+      # NSPDFPboardType: PDF content
+      # NSPICTPboardType: PICT content
+      # NSPostScriptPboardType: PostScript content
+      # NSRTFDPboardType: RTFD content
+      # NSRTFPboardType: RTF content
+      # NSRulerPboardType: Ruler content
+      # NSTIFFPboardType: TIFF content
+      # NSTabularTextPboardType: Tabular Text content
+      # NSURLPboardType: URLs
+      # NSVCardPboardType: vCards
+      # QS1PasswordForm: QS1PasswordForm
+      # QS1PasswordIdentity: QS1PasswordIdentity
+      # QS1PasswordOnlineService: QS1PasswordOnlineService
+      # QS1PasswordSecureNote: QS1PasswordSecureNote
+      # QS1PasswordSoftwareLicense: QS1PasswordSoftwareLicense
+      # QS1PasswordWalletItem: QS1PasswordWalletItem
+      # QSFormulaType: QSFormulaType
+      # QSKeychainAppleSharePasswordType: QSKeychainAppleSharePasswordType
+      # QSKeychainGenericPasswordType: QSKeychainGenericPasswordType
+      # QSKeychainInternetPasswordType: QSKeychainInternetPasswordType
+      # QSRemoteHostsType: QSRemoteHostsType
+      # WindowsType: WindowsType
+      # YTDeMinWinType: YTDeMinWinType
+      # com.apple.itunes.playlist: iTunes playlists
+      # com.apple.itunes.qsbrowsercriteria: com.apple.itunes.qsbrowsercriteria
+      # com.apple.itunes.track: iTunes track
+      # qs.action: qs.action
+      # qs.apple.iPhoto.album: qs.apple.iPhoto.album
+      # qs.apple.iPhoto.photo: qs.apple.iPhoto.photo
+      # qs.catalogentry: qs.catalogentry
+      # qs.command: qs.command
+      # qs.im.account: qs.im.account
+      # qs.networklocation: qs.networklocation
+      # qs.process: qs.process
+      # qs.shelf: qs.shelf
+      # qs.shellcommand: qs.shellcommand
+      # qs.tag.file: qs.tag.file
+      # qs.ui.element: qs.ui.element

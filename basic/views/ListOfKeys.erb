@@ -1,0 +1,56 @@
+<%
+def get_unique_keysets_for_kind kind
+  key_set = {}
+  this[:bundles].map do |bundle|
+    bundle.send(kind).each do |obj|
+      keys = Array(obj.info.keys).sort
+      (key_set[keys] ||= []) << obj
+    end
+  end
+  key_set.keys
+end
+def get_unique_keys_for_kind kind
+  key_set = {}
+  visited = 0
+  this[:bundles].map do |bundle|
+    Array(bundle.send(kind)).each do |obj|
+      visited += 1
+      obj.keys.each do |k|
+        key_set[k] = 0 unless key_set[k]
+        key_set[k] += 1
+      end
+    end
+  end
+  key_set[:total_objects_explored] = visited
+  key_set
+end
+def get_schema_of_key key
+  keys = {}
+  mp = HashExtensions.make_deep_merge_policy(nil)
+  this[:bundles].each do |b|
+    (b[key] || {}).each_pair do |name, val|
+      keys.merge!({name => HashExtensions.deep_schema(val)}, &mp)
+    end
+  end
+  keys
+end
+kinds = %w[actions commands proxies internal_objects preference_panes ui_controllers catalog_presets plugin resources triggers browsable_bundles].map(&:to_sym)
+%>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>ListOfKeys</title>
+</head>
+<body id="listofkeys">
+  <% kinds.each do |kind| %>
+  <h2><%= kind %></h2>
+  <pre>
+  <%= get_unique_keys_for_kind(kind).to_yaml %>
+  </pre>
+  <% end %>
+  
+  <h1>QSRegistration Schema</h1>
+  <pre><%= PP::pp(get_schema_of_key('QSRegistration'), "") %></pre>
+
+</body>
+</html>

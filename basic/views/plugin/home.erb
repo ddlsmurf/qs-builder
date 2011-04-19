@@ -1,0 +1,58 @@
+==Overview==
+
+<% if this['secret'] || this['hidden'] %>
+
+'''Plugin is <%= %w[secret hidden].select {|e| this[e]}.join " and " %>'''
+
+<% end %>
+----
+
+<%= html_links_to_wikimedia(this['description']) %>
+
+<%= image(this['ScreenShot'] && this['ScreenShot']['main']) %>
+
+<% if this['Tutorials'] && this['Tutorials'].count > 0 %>
+
+==Tutorials==
+
+<% this['Tutorials'].each do |tut| %>
+*<%= tut['title']%>
+:<%=external_link(tut['link'])%><%=youtube(tut['youtube'])%><%=tut['description']%>
+<%end%><%end%>
+
+<%= overiddable_template(config.url_for(this, "commands")) %>
+
+<%= overiddable_template(config.url_for(this, "preferences")) %>
+
+<% if this['extendedDescription'] %>
+
+==Description==
+
+<%= html_links_to_wikimedia(this['extendedDescription']) %>
+
+<%end%>
+
+<% if this.requirements.count > 0 %>
+
+==Requirements==
+
+<%this.requirements.each do |req|%>
+* <%= req.describe %>
+<% end %>
+<% end %>
+<% if this['author'] || this['homepage'] %>
+
+==Credits==
+
+<%= this['author'] %>
+
+<%= external_link(this['homepage']) %>
+
+<%= this['NSHumanReadableCopyright'] %>
+<% end %>
+<noinclude>
+<% if true || App.config.options[:debug] %>
+==Debug==
+<pre><%= this.info.to_yaml %></pre>
+<%end%>
+</noinclude>

@@ -1,0 +1,5 @@
+Tutorials:
+  - title: Spotlight query syntax reference
+    link: 'http://developer.apple.com/library/mac/#documentation/Carbon/Conceptual/SpotlightQuery/Concepts/QueryFormat.html'
+  - title: Spotlight meta-data keys
+    link: 'http://developer.apple.com/library/mac/#documentation/Carbon/Reference/MetadataAttributesRef/Reference/CommonAttrs.html'

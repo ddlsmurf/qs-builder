@@ -1,0 +1,15 @@
+QSPresetAdditions: 
+- ID: QSPresetOperaGroup
+  children: 
+  - ID: QSPresetOperaBrowserControlScripts
+    description: Various scripts for copying or moving tabs between browsers
+QSActions: 
+  QSOperaAction: 
+    description: Opens the URL with Opera regardless of the URL handler
+QSPlugIn: 
+  homepage: 'http://s-softs.com/Projects/QSOpera/index.html'
+ScreenShot:
+  main: Open with Opera Action 1 1.jpg
+Tutorials:
+  - title: Module setup and use.
+    youtube: IlWinySuoX4

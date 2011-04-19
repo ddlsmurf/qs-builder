@@ -1,0 +1,91 @@
+<%
+  rows = Array(this.each).uniq
+  rows.sort! do |a,b|
+    res = a.class.name <=> b.class.name
+    res = a.name <=> b.name if res == 0
+    res
+  end
+  def make_row obj, emphasis, p1, p2, p3 = "", reqs = "", notes = ""
+    if (p1 && p1.length > 0) || (p2 && p2.length > 0) || (p3 && p3.length > 0)
+      res = {:pane1 => p1, :pane2 => p2, :pane3 => p3, :reqs => reqs, :notes => notes}
+      res[:emphasis] = emphasis if emphasis
+      res[:obj_id] = "#{obj.class.name.sub('QS::', '')}/#{obj.id}"
+      res
+    else
+      nil
+    end
+  end
+  rows = rows.map do |e|
+    pane1, pane2, pane3, reqs, notes, emph = "", "", "", "", "", nil
+    notes = wrap(e.description, "", "\n")
+    notes += list(e.notes) if e.respond_to?(:notes)
+    case e
+    when QS::Action
+      emph = 2
+      file_types = e['directFileTypes']
+      pane1 = e.direct_types.map { |t| qs_object_type_link(t, file_types) }.join("\n")
+      pane2 = e.name
+      pane3 = e.indirect_types.map(&:name).join("\n")
+    when QS::Command
+      emph = 1
+      pane1 = qs_object_link(e)
+      pane2 = "''Nothing, it's a command''"
+    when QS::Proxy, QS::InternalObject
+      emph = 1
+      pane1 = qs_object_link(e)
+      if e.is_a?(QS::Proxy)
+        pane2 = "''Any action that accepts:''<br />" + list(e.types.map { |t| qs_object_type_link(t, nil) })
+      end
+    when QS::CatalogPreset
+      unless e.group?
+        emph = 1
+        pane1 = "#{qs_object_link(e)}<br />[→ into #{e.name} (Catalog) ]"
+      end
+    when QS::BundleChildHandler
+      emph = 1
+      app = e.app
+      pane1 = "#{qs_object_link(app)}<br />[→ into #{app.name}]"
+    end
+    make_row e, emph, pane1, pane2, pane3, reqs, notes
+  end.flatten.select {|e|e}.sort do |a, b|
+    r = a[:pane1].downcase <=> b[:pane1].downcase
+    r.zero? ? a[:pane2].downcase <=> b[:pane2].downcase : r
+  end
+  
+  # class Command < Registration ; end
+  # class Proxy < Registration ; end
+  # class InternalObject < Registration ; end
+  # class PreferencePane < Registration ; end
+  # #todo: add catalogs, with "<br />[→ into #{id} (Catalog) ]" and actions
+  # each_command { |id, entry| rows << row_of_object_source(entry['name'] || id, nil, entry['description']) }
+  # each_proxy { |id, entry| rows << row_of_object_source(qs_object_proxy_link(id, entry), nil, entry['description']) }
+  # #todo: add possible types to action from key entry['types']
+  # each_internal_object { |id, entry| rows << row_of_object_source(qs_object_internal_object_link(id, entry), nil, entry['description']) }
+  # each_browsable_external_bundle { |id, entry| rows << row_of_object_source(application_link(id) + "<br />[→ into #{id} ]") }
+    #pp rows if this.id == "com.blacktree.Quicksilver.QSCorePlugIn"
+ %>
+
+<% if rows.count > 0 %>
+==Commands==
+To execute [[Commands]]: select the Objects and Actions for each pane in Quicksilver, and press enter. Items exclusive to the plugin are in bold. Items in brackets are additional instructions for when typing in the panes.
+<%= make_table(:auto_rowspan => true) do
+  cols = %w[pane1 pane2 pane3 reqs notes].map(&:to_sym)
+  template_row = { :style_for => {} }
+  cols.each do |c|
+    template_row[c] = ""
+    column c
+  end
+  header_row ["Pane 1", "Pane 2", "Pane 3", "Extra Requirements", "Notes"]
+  rows.each do |r|
+    r = template_row.merge(r)
+    if emph = r.delete(:emphasis)
+      r[:style_for] = r[:style_for].merge("pane#{emph}".to_sym => { :header => true, :align => :left })
+    end
+    #cols.any? {|c| r[c]}
+    row r
+  end
+end %>
+<br />
+<% else %>
+'''This plugin does not add any commands'''
+<% end %>

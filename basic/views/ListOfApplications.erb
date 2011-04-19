@@ -1,0 +1,8 @@
+<%
+  plugins_by_app = {}
+  this[:bundles].each { |p| p.related_bundle_ids.each { |id| (plugins_by_app[id] ||= []) << p } }
+  plugins_by_app.each_pair do |app_id, plugins|
+%>
+* <%= qs_object_link(QS::Registry.get_app(app_id)) %><%= list(plugins.map { |p| qs_object_link(p) }, 2) %>
+
+<% end %>
