@@ -1,10 +1,15 @@
 # Helpers for writing media wiki formatted documents
+# 
+# - http://www.mediawiki.org/wiki/Help:Formatting
+# 
 module MediaWikiHelpers
   # wraps in <nowiki> tags
   def nowiki text, &block
     wrap_tag(text, "nowiki", &block)
   end
   # Creates a [[File: path]] link
+  # 
+  # http://www.mediawiki.org/wiki/Help:Images
   def image path
     wrap(path, "[[File:", "]]")
   end
@@ -15,6 +20,9 @@ module MediaWikiHelpers
   def template_argument name, default = nil
     "{{{#{name + (default.to_s.length > 0 ? "|" + default.to_s : "")}}}}"
   end
+  # Include template with provided arguments
+  # 
+  # http://www.mediawiki.org/wiki/Templates
   def template_call name, *args
     args += args.pop.map { |k, v| "#{k} = #{v}" if v && v.to_s.length > 0 } if args.last.is_a?(Hash)
     args = args.map { |e| e.to_s }
@@ -23,7 +31,6 @@ module MediaWikiHelpers
     "{{#{name}#{args.length == 0 ? "" : "| #{args}"}}}"
   end
   # Include specified URL from the global namespace
-  # http://www.mediawiki.org/wiki/Templates
   def include_template url, *args
     template_call ":#{url}", *args
   end
@@ -38,7 +45,7 @@ module MediaWikiHelpers
     func_call "ifexist", url, if_true, if_false
   end
   # Includes the template #{url}_Manual if it exists, falling
-  # back to url, or content_if_neither_exists
+  # back to including url, or the literal content_if_neither_exists
   def overiddable_template url, content_if_neither_exists = nil
     override_name = "#{url}_Manual"
     if_exists override_name, include_template(override_name), if_exists(url, include_template(url), content_if_neither_exists)

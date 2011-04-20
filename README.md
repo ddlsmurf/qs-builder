@@ -13,6 +13,10 @@ Base use case is generating wiki pages for documenting QuickSilver plugins.
 
 Runs the template in basic/init.rb into out/
 
+### Technical documentation ###
+
+[RDoc here](http://ddlsmurf.github.com/qs-builder/doc/index.html)
+
 ### Templates ###
 
 Template engine is handled by [Tilt](https://github.com/rtomayko/tilt/blob/master/TEMPLATES.md),

@@ -1,5 +1,6 @@
 module MediaWikiTableHelpers
 =begin rdoc
+  http://www.mediawiki.org/wiki/Help:Tables
   Yields in the context of Table.
   Upon completion of the block, returns the table in wikimedia format.
 
