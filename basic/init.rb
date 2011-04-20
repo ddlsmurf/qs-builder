@@ -2,6 +2,7 @@ $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '.')))
 
 require "media_wiki"
 require 'helpers/media_wiki_helpers'
+require "helpers/media_wiki_table_helpers"
 
 class Hash
   # Replacing the to_yaml function so it'll serialize hashes sorted (by their keys)
@@ -27,6 +28,7 @@ end
 
 class MediaContext < RenderContext
   include MediaWikiHelpers
+  include MediaWikiTableHelpers
   def path *segments
     segments.map { |e| MediaWiki::wiki_to_uri(e.to_s.gsub("*", "_STAR_").gsub(/[^a-z0-9_.-]/i, "_")) }.join "/"
   end

@@ -51,18 +51,6 @@
     r = a[:pane1].downcase <=> b[:pane1].downcase
     r.zero? ? a[:pane2].downcase <=> b[:pane2].downcase : r
   end
-  
-  # class Command < Registration ; end
-  # class Proxy < Registration ; end
-  # class InternalObject < Registration ; end
-  # class PreferencePane < Registration ; end
-  # #todo: add catalogs, with "<br />[→ into #{id} (Catalog) ]" and actions
-  # each_command { |id, entry| rows << row_of_object_source(entry['name'] || id, nil, entry['description']) }
-  # each_proxy { |id, entry| rows << row_of_object_source(qs_object_proxy_link(id, entry), nil, entry['description']) }
-  # #todo: add possible types to action from key entry['types']
-  # each_internal_object { |id, entry| rows << row_of_object_source(qs_object_internal_object_link(id, entry), nil, entry['description']) }
-  # each_browsable_external_bundle { |id, entry| rows << row_of_object_source(application_link(id) + "<br />[→ into #{id} ]") }
-    #pp rows if this.id == "com.blacktree.Quicksilver.QSCorePlugIn"
  %>
 
 <% if rows.count > 0 %>
