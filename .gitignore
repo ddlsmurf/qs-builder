@@ -60,3 +60,4 @@ obj/
 *.jar
 *.log
 *.def
+doc/

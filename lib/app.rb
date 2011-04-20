@@ -2,11 +2,11 @@ require 'pathname'
 # Very 'fun to fiddle with but not much more' dependency injection
 # 
 # You get:
-#   :extension points: Methods than can be called on any extension.
+#   extension points: Methods than can be called on any extension.
 #      A point can store additional configuration, such as a mediator method
 #      that is used to reduce the results of each extension's implementation.
 #      Is created on demand, or defined with App.extension_point
-#   :extensions: Instances that implement the code ran. They must be
+#   extensions: Instances that implement the code ran. They must be
 #      registered with App.register.
 # 
 # On startup, runs the extension point :main
@@ -39,7 +39,7 @@ class App
     # Define or refine an extension point that may be implemented
     # 
     # options can include:
-    #   :mediator: A lambda provided to Enumerable#reduce when require_one is called
+    #   mediator: A lambda provided to Enumerable#reduce when require_one is called
     # 
     # Includes a :handlers key which contains an up to date list of extensions
     # implementing this list, don't mess with it.
