@@ -1,6 +1,7 @@
 require 'yaml'
 
 class CliLogger
+  # Exception re-raised by the logger when it printed an exception in a block
   class ReraisedSilentException < StandardError
     attr_accessor :original
     def initialize orig

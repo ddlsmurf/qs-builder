@@ -1,19 +1,19 @@
 require 'pathname'
+# Very 'fun to fiddle with but not much more' dependency injection
+# 
+# You get:
+#   :extension points: Methods than can be called on any extension.
+#      A point can store additional configuration, such as a mediator method
+#      that is used to reduce the results of each extension's implementation.
+#      Is created on demand, or defined with App.extension_point
+#   :extensions: Instances that implement the code ran. They must be
+#      registered with App.register.
+# 
+# On startup, runs the extension point :main
+# 
+#   Doesn't this look exactly as if some amateur was
+#   strongly inspired by sinatra ?
 class App
-  # Very 'fun to fiddle with but not much more' dependency injection
-  # 
-  # You get:
-  #   :extension points: Methods than can be called on any extension.
-  #      A point can store additional configuration, such as a mediator method
-  #      that is used to reduce the results of each extension's implementation.
-  #      Is created on demand, or defined with App.extension_point
-  #   :extensions: Instances that implement the code ran. They must be
-  #      registered with App.register.
-  # 
-  # On startup, runs the extension point :main
-  # 
-  #   Doesn't this look exactly as if some amateur was
-  #   strongly inspired by sinatra ?
   class << self
     # Deletes all known extensions and extension points
     def clear_extensions

@@ -4,6 +4,7 @@ require "lib/bundle"
 %w[pathname shellwords yaml plist].
 each { |e| require e }
 
+# Helper class for locating and loading a bundle and it's info.plist
 class BundleLoader < FileLoader
   def initialize search_paths, readers
     super search_paths, readers
@@ -12,6 +13,7 @@ class BundleLoader < FileLoader
   def warn_duplicate_bundle bundle, extras
     puts "Warning duplicate bundle: #{bundle.inspect} and #{extras.map(&:inspect).join ", "}"
   end
+  # Read the plist and return a Bundle at the provided path
   def load_bundle bundle_path
     result = nil
     info_dict = Bundle::bundle_info_name(bundle_path)
@@ -27,6 +29,7 @@ class BundleLoader < FileLoader
     end
     result
   end
+  # Locate a bundle in the search paths
   def find_bundles path_pattern, warn_of_duplicate_files = true
     results = []
     duplicates = []
@@ -44,6 +47,9 @@ class BundleLoader < FileLoader
     raise "No bundle found with pattern #{path_pattern.inspect}. Searched:\n\t- #{attempts.join "\n\t- "}" if results.empty?
     results
   end
+  # Locate a bundle by its ID using spotlight
+  # 
+  # Only kMDItemContentType s com.apple.application-bundle and searchs com.apple.systempreference.prefpane
   def find_with_mdutil id
     # You're not supposed to use Shellwords.shellescape in quotes... hope that's ok... Bundlenames shouldn't pose a problem, but a malicious plist...
     raise "Must make find_with_mdutil safe before using it elsewhere" unless id =~ /^[a-z0-9\.-_]+$/
@@ -53,6 +59,7 @@ class BundleLoader < FileLoader
     results[0]
   end
   protected :find_with_mdutil
+  # Find or load specified ID, using spotlight to locate it
   def find_bundle_by_id id
     result = @bundles[id]
     unless result

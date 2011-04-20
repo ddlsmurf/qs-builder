@@ -77,6 +77,7 @@ class RenderContext
   end
 end
 
+# Helper class for running provider-agnostic templates and writing the output to the FileWriter
 class TemplateWriter
   def initialize logger, writer, template_paths, template_loaders
     @logger = logger

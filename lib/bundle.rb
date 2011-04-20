@@ -1,3 +1,4 @@
+# Represents a mac os x bundle, an app or a QSPlugin for example
 class Bundle
   attr_reader :path, :info
   def initialize path, info
@@ -18,6 +19,9 @@ class Bundle
   def name
     self['CFBundleName'] || @file_name || id
   end
+  # Return an array of all resources in this bundle
+  # 
+  # [attempted_extensions] Optional list of possible extensions for the resource name
   def bundle_resources name, *attempted_extensions
     Pathname.glob(if attempted_extensions.empty?
       path + "Contents/Resources/#{name}"
