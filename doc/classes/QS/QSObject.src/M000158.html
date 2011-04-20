@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>inspect (QS::QSObject)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/qs/objects.rb, line 60</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">inspect</span>
+      <span class="ruby-identifier">owner</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">owner</span> = <span class="ruby-ivar">@parent</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">plugin</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-identifier">owner</span> = <span class="ruby-node">&quot; of #{owner.name}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">owner</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Plugin</span>)
+      <span class="ruby-identifier">owner</span> = <span class="ruby-node">&quot; of #{owner.id == QS::BUNDLE_ID ? &quot;Quicksilver internal&quot; : plugin.id}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">owner</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Bundle</span>)
+      <span class="ruby-identifier">name</span> = <span class="ruby-node">&quot;: #{self.name}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>
+      <span class="ruby-node">&quot;#&lt;#{self.class.name}:#{id}#{owner}#{name}&gt;&quot;</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

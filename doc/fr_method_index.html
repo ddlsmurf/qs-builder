@@ -1,0 +1,266 @@
+
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/MediaWikiTable.html#M000108"><< (MediaWikiTable)</a><br />
+    <a href="classes/QS/Registration.html#M000171">[] (QS::Registration)</a><br />
+    <a href="classes/QS/QSObject.html#M000150">[] (QS::QSObject)</a><br />
+    <a href="classes/QS/Plugin.html#M000180">[] (QS::Plugin)</a><br />
+    <a href="classes/Bundle.html#M000088">[] (Bundle)</a><br />
+    <a href="classes/QS/Plugin.html#M000193">actions (QS::Plugin)</a><br />
+    <a href="classes/MediaWikiTable.html#M000098">add_cell (MediaWikiTable)</a><br />
+    <a href="classes/MediaWikiTable.html#M000102">add_row (MediaWikiTable)</a><br />
+    <a href="classes/ConfigBuilder.html#M000055">add_to_option_parser (ConfigBuilder)</a><br />
+    <a href="classes/QS/BundleChildHandler.html#M000160">app (QS::BundleChildHandler)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000238">application_link (MediaWikiHelpers)</a><br />
+    <a href="classes/QS/Plugin.html#M000194">browsable_bundles (QS::Plugin)</a><br />
+    <a href="files/lib/cli_app_rb.html#M000027">build_config (lib/cli_app.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000022">bundle_did_load (bundle_reader.rb)</a><br />
+    <a href="classes/Bundle.html#M000087">bundle_info_name (Bundle)</a><br />
+    <a href="classes/Bundle.html#M000091">bundle_resources (Bundle)</a><br />
+    <a href="classes/App.html#M000036">call_extension_point (App)</a><br />
+    <a href="classes/QS/Plugin.html#M000200">catalog_presets (QS::Plugin)</a><br />
+    <a href="classes/QS/CatalogPreset.html#M000167">catalog_presets (QS::CatalogPreset)</a><br />
+    <a href="classes/QS/Plugin.html#M000178">check_keys (QS::Plugin)</a><br />
+    <a href="classes/QS/Registry.html#M000201">clear (QS::Registry)</a><br />
+    <a href="classes/App.html#M000031">clear_extensions (App)</a><br />
+    <a href="classes/Helpers.html#M000220">code (Helpers)</a><br />
+    <a href="classes/QS/Registry.html#M000202">collisions (QS::Registry)</a><br />
+    <a href="classes/MediaWikiTable.html#M000097">column (MediaWikiTable)</a><br />
+    <a href="classes/MediaWikiTable.html#M000106">columnify (MediaWikiTable)</a><br />
+    <a href="classes/QS/Plugin.html#M000195">commands (QS::Plugin)</a><br />
+    <a href="classes/TemplateDataHelpers.html#M000217">config (TemplateDataHelpers)</a><br />
+    <a href="files/lib/cli_app_rb.html#M000025">config (lib/cli_app.rb)</a><br />
+    <a href="classes/MediaWiki/Gateway.html#M000131">create (MediaWiki::Gateway)</a><br />
+    <a href="classes/HashExtensions.html#M000213">deep_schema (HashExtensions)</a><br />
+    <a href="classes/QS/ObjectType.html#M000161">definition (QS::ObjectType)</a><br />
+    <a href="classes/QS/Requirement.html#M000148">describe (QS::Requirement)</a><br />
+    <a href="classes/QS/Plugin.html#M000183">description (QS::Plugin)</a><br />
+    <a href="classes/QS/QSObject.html#M000155">description (QS::QSObject)</a><br />
+    <a href="classes/QS/Action.html#M000139">description (QS::Action)</a><br />
+    <a href="files/json/init_rb.html#M000023">dict_readers (json/init.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000003">dict_readers (bundle_reader.rb)</a><br />
+    <a href="classes/QS/Action.html#M000140">direct_types (QS::Action)</a><br />
+    <a href="classes/HashExtensions.html#M000212">dup_structure (HashExtensions)</a><br />
+    <a href="classes/QS/Plugin.html#M000188">each (QS::Plugin)</a><br />
+    <a href="classes/QS/Plugin.html#M000186">each_catalog_preset (QS::Plugin)</a><br />
+    <a href="classes/FileLoader.html#M000070">each_existing_path (FileLoader)</a><br />
+    <a href="classes/FileLoader.html#M000071">each_existing_readable (FileLoader)</a><br />
+    <a href="classes/App.html#M000035">each_handler (App)</a><br />
+    <a href="classes/FileLoader.html#M000072">each_readable_with_basename (FileLoader)</a><br />
+    <a href="classes/Helpers.html#M000222">enum_with_sep (Helpers)</a><br />
+    <a href="classes/EnumExtension.html#M000223">enumerate_over (EnumExtension)</a><br />
+    <a href="files/lib/cli_app_rb.html#M000026">extension_did_load (lib/cli_app.rb)</a><br />
+    <a href="classes/App.html#M000033">extension_point (App)</a><br />
+    <a href="classes/App.html#M000034">extensions_for_point (App)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000235">external_link (MediaWikiHelpers)</a><br />
+    <a href="classes/App.html#M000045">file_to_wiki_info (App)</a><br />
+    <a href="classes/QS/ObjectType.html#M000162">files? (QS::ObjectType)</a><br />
+    <a href="classes/BundleLoader.html#M000130">find_bundle_by_id (BundleLoader)</a><br />
+    <a href="classes/BundleLoader.html#M000128">find_bundles (BundleLoader)</a><br />
+    <a href="classes/BundleLoader.html#M000129">find_with_mdutil (BundleLoader)</a><br />
+    <a href="classes/MediaWikiTable.html#M000101">flush_table (MediaWikiTable)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000229">func_call (MediaWikiHelpers)</a><br />
+    <a href="classes/App.html#M000037">get_all (App)</a><br />
+    <a href="classes/QS/Registry.html#M000208">get_app (QS::Registry)</a><br />
+    <a href="classes/MediaWikiTable.html#M000103">get_cells (MediaWikiTable)</a><br />
+    <a href="classes/App.html#M000042">get_keychain_account (App)</a><br />
+    <a href="classes/App.html#M000041">get_page_name (App)</a><br />
+    <a href="classes/URLHelpers.html#M000137">get_qs_segments (URLHelpers)</a><br />
+    <a href="classes/QS/Registry.html#M000207">get_type (QS::Registry)</a><br />
+    <a href="classes/ConfigBuilder.html#M000056">group (ConfigBuilder)</a><br />
+    <a href="classes/QS/CatalogPreset.html#M000165">group? (QS::CatalogPreset)</a><br />
+    <a href="classes/MediaWikiTable.html#M000100">handle_row_spans (MediaWikiTable)</a><br />
+    <a href="classes/MediaWikiTable.html#M000107">hash_to_styles (MediaWikiTable)</a><br />
+    <a href="classes/MediaWikiTable.html#M000104">header_row (MediaWikiTable)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000236">hover (MediaWikiHelpers)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000234">html_links_to_wikimedia (MediaWikiHelpers)</a><br />
+    <a href="classes/QS/QSObject.html#M000152">id (QS::QSObject)</a><br />
+    <a href="classes/QS/Plugin.html#M000182">id (QS::Plugin)</a><br />
+    <a href="classes/Bundle.html#M000089">id (Bundle)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000230">if_exists (MediaWikiHelpers)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000226">image (MediaWikiHelpers)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000228">include_template (MediaWikiHelpers)</a><br />
+    <a href="classes/CliLogger.html#M000118">indent (CliLogger)</a><br />
+    <a href="classes/CliLogger.html#M000115">indent (CliLogger)</a><br />
+    <a href="classes/CliLogger.html#M000120">indented (CliLogger)</a><br />
+    <a href="classes/QS/Registry.html#M000211">index (QS::Registry)</a><br />
+    <a href="classes/QS/Action.html#M000141">indirect_types (QS::Action)</a><br />
+    <a href="classes/QS/ClassRegistration.html#M000169">info (QS::ClassRegistration)</a><br />
+    <a href="classes/QS/QSObject.html#M000158">inspect (QS::QSObject)</a><br />
+    <a href="classes/Bundle.html#M000092">inspect (Bundle)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000227">internal_link (MediaWikiHelpers)</a><br />
+    <a href="classes/QS/Plugin.html#M000197">internal_objects (QS::Plugin)</a><br />
+    <a href="classes/Bundle.html#M000082">keys (Bundle)</a><br />
+    <a href="classes/QS/QSObject.html#M000153">keys (QS::QSObject)</a><br />
+    <a href="classes/QS/Plugin.html#M000181">keys (QS::Plugin)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000240">list (MediaWikiHelpers)</a><br />
+    <a href="classes/BundleLoader.html#M000127">load_bundle (BundleLoader)</a><br />
+    <a href="classes/PluginLoader.html#M000079">load_bundle (PluginLoader)</a><br />
+    <a href="classes/PluginLoader.html#M000078">load_bundle_localised_resources (PluginLoader)</a><br />
+    <a href="files/bundle_reader_rb.html#M000011">load_bundles (bundle_reader.rb)</a><br />
+    <a href="classes/App.html#M000039">load_extensions (App)</a><br />
+    <a href="files/bundle_reader_rb.html#M000010">load_external_app (bundle_reader.rb)</a><br />
+    <a href="classes/QS/Registry.html#M000210">load_plugins (QS::Registry)</a><br />
+    <a href="classes/PluginLoader.html#M000081">load_plugins (PluginLoader)</a><br />
+    <a href="classes/PluginLoader.html#M000080">load_qs_bundle (PluginLoader)</a><br />
+    <a href="classes/TemplateWriter.html#M000049">load_template (TemplateWriter)</a><br />
+    <a href="classes/TemplateDataHelpers.html#M000215">load_template_data! (TemplateDataHelpers)</a><br />
+    <a href="classes/Bundle.html#M000083">localisation_table (Bundle)</a><br />
+    <a href="classes/Bundle.html#M000084">localised_string (Bundle)</a><br />
+    <a href="classes/QS/Plugin.html#M000179">localised_string (QS::Plugin)</a><br />
+    <a href="classes/QS/QSObject.html#M000157">localised_string (QS::QSObject)</a><br />
+    <a href="classes/CliLogger.html#M000117">log (CliLogger)</a><br />
+    <a href="classes/QS/Registry.html#M000203">log_collision (QS::Registry)</a><br />
+    <a href="classes/CliLogger.html#M000121">log_exception (CliLogger)</a><br />
+    <a href="files/lib/cli_app_rb.html#M000024">logger (lib/cli_app.rb)</a><br />
+    <a href="classes/App.html#M000043">login (App)</a><br />
+    <a href="files/lib/cli_app_rb.html#M000029">main (lib/cli_app.rb)</a><br />
+    <a href="classes/FileLoader.html#M000065">make_alternates (FileLoader)</a><br />
+    <a href="classes/HashExtensions.html#M000214">make_deep_merge_policy (HashExtensions)</a><br />
+    <a href="files/bundle_reader_rb.html#M000009">make_fake_app_bundle (bundle_reader.rb)</a><br />
+    <a href="classes/URLHelpers.html#M000136">make_path (URLHelpers)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000224">make_table (MediaWikiHelpers)</a><br />
+    <a href="classes/FileLoader.html#M000066">make_wildcard_for_extensions (FileLoader)</a><br />
+    <a href="classes/Bundle.html#M000085">merge! (Bundle)</a><br />
+    <a href="files/bundle_reader_rb.html#M000021">merge_languages_for (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000020">merge_overrides_for (bundle_reader.rb)</a><br />
+    <a href="classes/CliLogger/ReraisedSilentException.html#M000124">message (CliLogger::ReraisedSilentException)</a><br />
+    <a href="classes/MediaWikiTable.html#M000095">method_missing (MediaWikiTable)</a><br />
+    <a href="classes/CliLogger.html#M000122">method_missing (CliLogger)</a><br />
+    <a href="classes/FakeGateway.html#M000094">method_missing (FakeGateway)</a><br />
+    <a href="classes/CliLogger.html#M000111">minimum (CliLogger)</a><br />
+    <a href="classes/CliLogger.html#M000112">minimum= (CliLogger)</a><br />
+    <a href="classes/CliLogger.html#M000113">minimum_when_failed (CliLogger)</a><br />
+    <a href="classes/CliLogger.html#M000114">minimum_when_failed= (CliLogger)</a><br />
+    <a href="classes/QS/QSObject.html#M000154">name (QS::QSObject)</a><br />
+    <a href="classes/QS/ObjectType.html#M000163">name (QS::ObjectType)</a><br />
+    <a href="classes/QS/CatalogPreset.html#M000164">name (QS::CatalogPreset)</a><br />
+    <a href="classes/Bundle.html#M000090">name (Bundle)</a><br />
+    <a href="classes/QS/Plugin.html#M000184">name (QS::Plugin)</a><br />
+    <a href="classes/QS/Action.html#M000138">name (QS::Action)</a><br />
+    <a href="classes/FileWriter.html#M000074">new (FileWriter)</a><br />
+    <a href="classes/PluginLoader.html#M000076">new (PluginLoader)</a><br />
+    <a href="classes/CliLogger/ReraisedSilentException.html#M000123">new (CliLogger::ReraisedSilentException)</a><br />
+    <a href="classes/TemplateWriter.html#M000048">new (TemplateWriter)</a><br />
+    <a href="classes/BundleLoader.html#M000125">new (BundleLoader)</a><br />
+    <a href="classes/MediaWikiTable.html#M000096">new (MediaWikiTable)</a><br />
+    <a href="classes/QS/Plugin.html#M000174">new (QS::Plugin)</a><br />
+    <a href="classes/FakeGateway.html#M000093">new (FakeGateway)</a><br />
+    <a href="classes/QS/Requirement.html#M000146">new (QS::Requirement)</a><br />
+    <a href="classes/QS/Registration.html#M000170">new (QS::Registration)</a><br />
+    <a href="classes/ConfigBuilder.html#M000053">new (ConfigBuilder)</a><br />
+    <a href="classes/QS/QSObject.html#M000149">new (QS::QSObject)</a><br />
+    <a href="classes/RenderContext.html#M000057">new (RenderContext)</a><br />
+    <a href="classes/FileLoader.html#M000067">new (FileLoader)</a><br />
+    <a href="classes/CliLogger.html#M000110">new (CliLogger)</a><br />
+    <a href="classes/Bundle.html#M000086">new (Bundle)</a><br />
+    <a href="classes/QS/Resource.html#M000159">new (QS::Resource)</a><br />
+    <a href="classes/QS/Action.html#M000143">notes (QS::Action)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000225">nowiki (MediaWikiHelpers)</a><br />
+    <a href="classes/QS/Registry.html#M000209">objects (QS::Registry)</a><br />
+    <a href="classes/QS/CatalogPreset.html#M000168">objects_to_index (QS::CatalogPreset)</a><br />
+    <a href="classes/QS/Plugin.html#M000187">objects_to_index (QS::Plugin)</a><br />
+    <a href="classes/ConfigBuilder.html#M000054">on (ConfigBuilder)</a><br />
+    <a href="files/bundle_reader_rb.html#M000014">output_writer (bundle_reader.rb)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000231">overiddable_template (MediaWikiHelpers)</a><br />
+    <a href="classes/MediaWiki/Gateway.html#M000132">page_rev_ids (MediaWiki::Gateway)</a><br />
+    <a href="classes/App.html#M000040">parse_options (App)</a><br />
+    <a href="files/lib/cli_app_rb.html#M000028">parse_options (lib/cli_app.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000006">parse_options (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000012">parse_options (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000018">parse_options (bundle_reader.rb)</a><br />
+    <a href="classes/RenderContext.html#M000064">partial (RenderContext)</a><br />
+    <a href="classes/RenderContext.html#M000063">partial_enum (RenderContext)</a><br />
+    <a href="classes/URLHelpers.html#M000134">path_for (URLHelpers)</a><br />
+    <a href="classes/QS/QSObject.html#M000151">plugin (QS::QSObject)</a><br />
+    <a href="classes/QS/Plugin.html#M000198">preference_panes (QS::Plugin)</a><br />
+    <a href="classes/App.html#M000046">process_file (App)</a><br />
+    <a href="classes/QS/Plugin.html#M000196">proxies (QS::Plugin)</a><br />
+    <a href="classes/QS/QSObject.html#M000156">qs_get_all (QS::QSObject)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000232">qs_object_link (MediaWikiHelpers)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000233">qs_object_type_link (MediaWikiHelpers)</a><br />
+    <a href="classes/QS/Plugin.html#M000185">qs_plugin (QS::Plugin)</a><br />
+    <a href="classes/FileLoader.html#M000069">read_file (FileLoader)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000239">redirect (MediaWikiHelpers)</a><br />
+    <a href="classes/QS/Registry.html#M000204">register (QS::Registry)</a><br />
+    <a href="classes/App.html#M000032">register (App)</a><br />
+    <a href="classes/QS/Registry.html#M000205">registration_kinds (QS::Registry)</a><br />
+    <a href="classes/QS/Registration.html#M000172">registration_types (QS::Registration)</a><br />
+    <a href="classes/QS/Registry.html#M000206">registrations (QS::Registry)</a><br />
+    <a href="classes/QS/Plugin.html#M000190">registrations (QS::Plugin)</a><br />
+    <a href="classes/QS/Registration.html#M000173">registrations_of (QS::Registration)</a><br />
+    <a href="classes/QS/Plugin.html#M000176">related_bundle_ids (QS::Plugin)</a><br />
+    <a href="classes/RenderContext.html#M000062">render (RenderContext)</a><br />
+    <a href="classes/TemplateWriter.html#M000052">render (TemplateWriter)</a><br />
+    <a href="classes/TemplateWriter.html#M000050">render_to (TemplateWriter)</a><br />
+    <a href="classes/QS/Plugin.html#M000177">report_error (QS::Plugin)</a><br />
+    <a href="classes/App.html#M000038">require_one (App)</a><br />
+    <a href="classes/QS/CatalogPreset.html#M000166">requirements (QS::CatalogPreset)</a><br />
+    <a href="classes/QS/Action.html#M000142">requirements (QS::Action)</a><br />
+    <a href="classes/QS/Plugin.html#M000189">requirements (QS::Plugin)</a><br />
+    <a href="classes/QS/Requirement.html#M000147">requirements_of (QS::Requirement)</a><br />
+    <a href="classes/QS/Plugin.html#M000191">resources (QS::Plugin)</a><br />
+    <a href="classes/RenderContext.html#M000059">root (RenderContext)</a><br />
+    <a href="classes/RenderContext.html#M000058">root? (RenderContext)</a><br />
+    <a href="classes/MediaWikiTable.html#M000105">row (MediaWikiTable)</a><br />
+    <a href="files/bundle_reader_rb.html#M000005">run (bundle_reader.rb)</a><br />
+    <a href="classes/App.html#M000047">run (App)</a><br />
+    <a href="files/basic/init_rb.html#M000001">run_erb_template (basic/init.rb)</a><br />
+    <a href="files/plist/init_rb.html#M000030">run_template (plist/init.rb)</a><br />
+    <a href="files/basic/init_rb.html#M000002">run_template (basic/init.rb)</a><br />
+    <a href="classes/FileLoader.html#M000068">search_paths= (FileLoader)</a><br />
+    <a href="files/bundle_reader_rb.html#M000017">startup (bundle_reader.rb)</a><br />
+    <a href="classes/RenderContext.html#M000061">sub_context_for (RenderContext)</a><br />
+    <a href="classes/TemplateDataHelpers.html#M000216">template_data (TemplateDataHelpers)</a><br />
+    <a href="files/bundle_reader_rb.html#M000016">template_data (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000008">template_data (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000004">template_readers (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000015">template_writer (bundle_reader.rb)</a><br />
+    <a href="classes/MediaWikiTable.html#M000109">to_s (MediaWikiTable)</a><br />
+    <a href="classes/Hash.html#M000073">to_yaml (Hash)</a><br />
+    <a href="classes/QS/Plugin.html#M000192">triggers (QS::Plugin)</a><br />
+    <a href="classes/QS/Proxy.html#M000145">types (QS::Proxy)</a><br />
+    <a href="classes/QS/Plugin.html#M000199">ui_controllers (QS::Plugin)</a><br />
+    <a href="classes/CliLogger.html#M000119">unindent_at (CliLogger)</a><br />
+    <a href="classes/App.html#M000044">upload (App)</a><br />
+    <a href="classes/URLHelpers.html#M000133">url (URLHelpers)</a><br />
+    <a href="classes/URLHelpers.html#M000135">url_for (URLHelpers)</a><br />
+    <a href="classes/QS/Action.html#M000144">validate (QS::Action)</a><br />
+    <a href="classes/QS/Plugin.html#M000175">validate (QS::Plugin)</a><br />
+    <a href="files/bundle_reader_rb.html#M000013">validate_options (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000007">validate_options (bundle_reader.rb)</a><br />
+    <a href="files/bundle_reader_rb.html#M000019">validate_options (bundle_reader.rb)</a><br />
+    <a href="classes/BundleLoader.html#M000126">warn_duplicate_bundle (BundleLoader)</a><br />
+    <a href="classes/PluginLoader.html#M000077">warn_duplicate_bundle (PluginLoader)</a><br />
+    <a href="classes/Helpers.html#M000218">when_not_empty (Helpers)</a><br />
+    <a href="classes/Helpers.html#M000219">wrap (Helpers)</a><br />
+    <a href="classes/Helpers.html#M000221">wrap_tag (Helpers)</a><br />
+    <a href="classes/CliLogger.html#M000116">write (CliLogger)</a><br />
+    <a href="classes/MediaWikiTable.html#M000099">write_row (MediaWikiTable)</a><br />
+    <a href="classes/TemplateWriter.html#M000051">write_to_output (TemplateWriter)</a><br />
+    <a href="classes/FileWriter.html#M000075">write_to_output (FileWriter)</a><br />
+    <a href="classes/RenderContext.html#M000060">writer (RenderContext)</a><br />
+    <a href="classes/MediaWikiHelpers.html#M000237">youtube (MediaWikiHelpers)</a><br />
+  </div>
+</div>
+</body>
+</html>

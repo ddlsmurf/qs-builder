@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>parse_options (bundle_reader.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File bundle_reader.rb, line 194</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_options</span> <span class="ruby-identifier">opts</span>, <span class="ruby-identifier">global_options</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-value str">&quot;Template output options&quot;</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--out PATH&quot;</span>, <span class="ruby-value str">&quot;Prefix all output files to specified path&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:output</span>] = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--plist NAME&quot;</span>, <span class="ruby-value str">&quot;Write a plist stream of the plugins to the specified filename&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      (<span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:templates</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;plist&quot;</span>
+      <span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:plist</span>] = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-t&quot;</span>, <span class="ruby-value str">&quot;--templates FILEPATH&quot;</span>, <span class="ruby-value str">&quot;Add template to run. Must contain an init.rb file.&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      (<span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:templates</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--dry-run&quot;</span>, <span class="ruby-value str">&quot;Do not actually write anything.&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:dry_run</span>] = <span class="ruby-keyword kw">true</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--wiki-prefix PREFIX&quot;</span>, <span class="ruby-value str">&quot;Add prefix to all local wiki links when creating Page name&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:wiki_prefix</span>] = <span class="ruby-identifier">v</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

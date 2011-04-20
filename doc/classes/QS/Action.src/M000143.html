@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>notes (QS::Action)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/qs/objects.rb, line 189</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">notes</span>
+      <span class="ruby-identifier">res</span> = []
+      <span class="ruby-identifier">res</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">Array</span>(<span class="ruby-keyword kw">self</span>[<span class="ruby-node">&quot;#{CUSTOM_KEYS_PREFIX}notes&quot;</span>]) <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-node">&quot;#{CUSTOM_KEYS_PREFIX}notes&quot;</span>]
+      <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;Re-opens Quicksilver with the results&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'displaysResult'</span>]
+      <span class="ruby-identifier">alternate_action</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'alternateAction'</span>]
+      <span class="ruby-identifier">alternate_action</span> = <span class="ruby-identifier">plugin</span>.<span class="ruby-identifier">actions</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">alternate_action</span>}.<span class="ruby-identifier">first</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">alternate_action</span>
+      <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;Hold  ⌘ to run ''#{alternate_action.name}'' instead&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">alternate_action</span>
+      <span class="ruby-identifier">res</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;Implemented in AppleScript&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'actionClass'</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;QSAppleScriptActions&quot;</span>
+      <span class="ruby-identifier">res</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span><span class="ruby-identifier">e</span>}
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

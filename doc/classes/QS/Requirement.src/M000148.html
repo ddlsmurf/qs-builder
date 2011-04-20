@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>describe (QS::Requirement)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/qs/objects.rb, line 138</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">describe</span>
+      <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">type</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:bundle</span>
+        <span class="ruby-value str">&quot;Application with id or name. Ignored if default QSIgnorePlugInBundleRequirements is true. Ignored anyway (see QSPlugIn.m:512)&quot;</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:framework</span>
+        <span class="ruby-node">&quot;Framework '#{id}' in #{self['resource']}&quot;</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:path</span>
+        <span class="ruby-node">&quot;Path at #{self[:path].inspect} must exist&quot;</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:qs_version</span>
+        <span class="ruby-node">&quot;Quicksilver build later than #{self[:version]}&quot;</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:feature</span>
+        <span class="ruby-node">&quot;Quicksilver feature level greater than #{self[:feature]}&quot;</span>
+      <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:plugin</span>
+        <span class="ruby-node">&quot;Quicksilver plugin #{name.inspect}&quot;</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-node">&quot;Unknown: #{info.inspect}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

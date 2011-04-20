@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: QS</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">QS</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/lib/qs/objects_rb.html">
+                lib/qs/objects.rb
+                </a>
+        <br />
+                <a href="../files/lib/qs/registry_rb.html">
+                lib/qs/registry.rb
+                </a>
+        <br />
+                <a href="../files/lib/qs_rb.html">
+                lib/qs.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Namespace for everything related to interpreting Quicksilver&#8216;s
+formats
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="QS/Action.html" class="link">QS::Action</a><br />
+Class <a href="QS/BundleChildHandler.html" class="link">QS::BundleChildHandler</a><br />
+Class <a href="QS/CatalogPreset.html" class="link">QS::CatalogPreset</a><br />
+Class <a href="QS/ClassRegistration.html" class="link">QS::ClassRegistration</a><br />
+Class <a href="QS/Command.html" class="link">QS::Command</a><br />
+Class <a href="QS/InternalObject.html" class="link">QS::InternalObject</a><br />
+Class <a href="QS/ObjectType.html" class="link">QS::ObjectType</a><br />
+Class <a href="QS/Plugin.html" class="link">QS::Plugin</a><br />
+Class <a href="QS/PreferencePane.html" class="link">QS::PreferencePane</a><br />
+Class <a href="QS/Proxy.html" class="link">QS::Proxy</a><br />
+Class <a href="QS/QSObject.html" class="link">QS::QSObject</a><br />
+Class <a href="QS/Registration.html" class="link">QS::Registration</a><br />
+Class <a href="QS/Registry.html" class="link">QS::Registry</a><br />
+Class <a href="QS/Requirement.html" class="link">QS::Requirement</a><br />
+Class <a href="QS/Resource.html" class="link">QS::Resource</a><br />
+Class <a href="QS/Trigger.html" class="link">QS::Trigger</a><br />
+Class <a href="QS/UIController.html" class="link">QS::UIController</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">CUSTOM_KEYS_PREFIX</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;brdoc_&quot;</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+Prefix for keys used by overrides for the documentation system only
+
+</td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">BUNDLE_ID</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;com.blacktree.Quicksilver&quot;</td>
+          <td width="3em">&nbsp;</td>
+          <td class="context-item-desc">
+<a href="Bundle.html">Bundle</a> ID of Quicksilver.app
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

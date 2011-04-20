@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>load_bundles (bundle_reader.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File bundle_reader.rb, line 166</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_bundles</span> <span class="ruby-identifier">bundles</span>, <span class="ruby-identifier">global_options</span>
+    <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">App</span>.<span class="ruby-identifier">require_one</span>(<span class="ruby-identifier">:logger</span>)
+    <span class="ruby-identifier">readers</span> = <span class="ruby-constant">App</span>.<span class="ruby-identifier">require_one</span>(<span class="ruby-identifier">:dict_readers</span>)
+    <span class="ruby-identifier">bundle_loader</span> = <span class="ruby-constant">PluginLoader</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:plugin_paths</span>], <span class="ruby-identifier">readers</span>, <span class="ruby-ivar">@logger</span>)
+    <span class="ruby-ivar">@qs_app</span> = <span class="ruby-identifier">bundle_loader</span>.<span class="ruby-identifier">load_qs_bundle</span> <span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:qs_app_path</span>]
+    <span class="ruby-ivar">@bundles</span> = <span class="ruby-constant">QS</span><span class="ruby-operator">::</span><span class="ruby-constant">Registry</span>.<span class="ruby-identifier">load_plugins</span>(<span class="ruby-identifier">bundle_loader</span>.<span class="ruby-identifier">load_plugins</span>(<span class="ruby-identifier">bundles</span>), <span class="ruby-ivar">@qs_app</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">bundle_id</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">global_options</span>[<span class="ruby-identifier">:dont_load_bundles</span>]
+        <span class="ruby-identifier">make_fake_app_bundle</span> <span class="ruby-identifier">bundle_id</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">load_external_app</span> <span class="ruby-identifier">bundle_loader</span>, <span class="ruby-identifier">bundle_id</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

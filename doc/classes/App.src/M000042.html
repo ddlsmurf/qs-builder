@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>get_keychain_account (App)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File wikirobot.rb, line 128</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_keychain_account</span> <span class="ruby-identifier">name</span>
+    <span class="ruby-identifier">keychain</span> = {}
+    <span class="ruby-node">`security find-internet-password -gl #{Shellwords.shellescape(@options[:keychain])} 2&gt;&amp;1`</span>.
+    <span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/^\s*(?:([^:]+): |&quot;([a-z0-9 _]{4})&quot;&lt;[^&gt;]*&gt;=)&quot;(.*)&quot;$/i</span>).<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> <span class="ruby-identifier">keychain</span>[<span class="ruby-identifier">entry</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">entry</span>[<span class="ruby-value">1</span>]] = <span class="ruby-identifier">entry</span>[<span class="ruby-value">2</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entry</span>[<span class="ruby-value">2</span>]}
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Keychain item #{v.inspect} not found (or no account)&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">keychain</span>[<span class="ruby-value str">&quot;acct&quot;</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">keychain</span>[<span class="ruby-value str">&quot;acct&quot;</span>].<span class="ruby-identifier">empty?</span>
+    <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Keychain item #{v.inspect} not found (or no password)&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">keychain</span>[<span class="ruby-value str">&quot;password&quot;</span>]
+    <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Using account #{keychain[&quot;acct&quot;].inspect} from keychain&quot;</span>
+    [<span class="ruby-identifier">keychain</span>[<span class="ruby-value str">&quot;acct&quot;</span>], <span class="ruby-identifier">keychain</span>[<span class="ruby-value str">&quot;password&quot;</span>]]
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

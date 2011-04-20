@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>merge_languages_for (bundle_reader.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File bundle_reader.rb, line 266</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">merge_languages_for</span> <span class="ruby-identifier">bundle</span>
+    <span class="ruby-identifier">res</span> = <span class="ruby-identifier">bundle</span>[<span class="ruby-identifier">:res</span>]
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">res</span>
+    <span class="ruby-identifier">langs</span> = ((<span class="ruby-ivar">@languages</span> <span class="ruby-operator">||</span> []) <span class="ruby-operator">+</span> [<span class="ruby-keyword kw">nil</span>, <span class="ruby-value str">&quot;&quot;</span>]).<span class="ruby-identifier">reverse</span>
+    <span class="ruby-identifier">res</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">name</span>, <span class="ruby-identifier">val</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">loaded_res</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-identifier">langs</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">language</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">entries</span> = <span class="ruby-identifier">val</span>[<span class="ruby-identifier">language</span>]
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">entries</span>
+          <span class="ruby-identifier">loaded_res</span> = <span class="ruby-keyword kw">true</span>
+          <span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">merge!</span>({ <span class="ruby-identifier">:res</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">name</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:current</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">entries</span> }}})
+          <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Merging language #{language.nil? || language == &quot;&quot; ? &quot;&lt;neutral&gt;&quot; : language} of #{name} (#{entries.size} entries)&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">loaded_res</span>
+        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;No languages loaded for #{name} in #{bundle.inspect}&quot;</span>, <span class="ruby-identifier">:available_languages</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Array</span>(<span class="ruby-identifier">val</span>.<span class="ruby-identifier">keys</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>make_deep_merge_policy (HashExtensions)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/hash_extensions.rb, line 34</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">make_deep_merge_policy</span> <span class="ruby-identifier">id_key</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">resulting_policy</span> =
+     <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">old_val</span>, <span class="ruby-identifier">new_val</span><span class="ruby-operator">|</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">new_val</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">old_val</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">old_val</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_val</span>.<span class="ruby-identifier">nil?</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">old_val</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_val</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">id_key</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">old_val</span>.<span class="ruby-identifier">all?</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>[<span class="ruby-identifier">id_key</span>] }
+            <span class="ruby-identifier">old_items_by_id</span> = {}
+            <span class="ruby-identifier">new_items_by_id</span> = {}
+            <span class="ruby-identifier">old_val</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> <span class="ruby-identifier">old_items_by_id</span>[<span class="ruby-identifier">entry</span>[<span class="ruby-identifier">id_key</span>]] = <span class="ruby-identifier">entry</span> }
+            <span class="ruby-identifier">new_val</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">entry</span><span class="ruby-operator">|</span> <span class="ruby-identifier">new_items_by_id</span>[<span class="ruby-identifier">entry</span>[<span class="ruby-identifier">id_key</span>]] = <span class="ruby-identifier">entry</span> }
+            <span class="ruby-identifier">old_items_by_id</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">new_items_by_id</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">resulting_policy</span>)
+            <span class="ruby-identifier">old_val</span> = <span class="ruby-identifier">old_items_by_id</span>.<span class="ruby-identifier">values</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">old_val</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">new_val</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Cannot merge #{key}, incompatible types: #{old_val.inspect} and #{new_val.inspect}&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">old_val</span>
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">old_val</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_val</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+          <span class="ruby-identifier">old_val</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">new_val</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">resulting_policy</span>)
+        <span class="ruby-keyword kw">else</span>
+          <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Cannot merge #{key}, incompatible types: #{old_val.inspect} and #{new_val.inspect}&quot;</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">old_val</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">new_val</span> = <span class="ruby-identifier">block</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">old_val</span>, <span class="ruby-identifier">new_val</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">block</span>
+        <span class="ruby-identifier">new_val</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

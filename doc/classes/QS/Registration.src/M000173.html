@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>registrations_of (QS::Registration)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/qs/objects.rb, line 228</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">registrations_of</span> <span class="ruby-identifier">obj</span>
+      <span class="ruby-identifier">results</span> = []
+      <span class="ruby-identifier">parent</span> = <span class="ruby-identifier">obj</span>
+      <span class="ruby-identifier">plugin</span> = <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Bundle</span>)
+        <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">localisation_table</span>(<span class="ruby-value str">'QSRegistration.plist'</span>)
+      <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Plugin</span>)
+        <span class="ruby-identifier">plist</span>, <span class="ruby-identifier">obj</span> = <span class="ruby-identifier">obj</span>, <span class="ruby-identifier">obj</span>[<span class="ruby-value str">'QSRegistration'</span>]
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Unexpected argument type for obj: (Wanted a Bundle or QS::Plugin) #{obj.inspect}&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">plugin</span>.<span class="ruby-identifier">report_error</span> <span class="ruby-value str">&quot;No QSRegistration ?&quot;</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">obj</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">empty?</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">plugin</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">results</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">obj</span>
+      <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">kind</span>, <span class="ruby-identifier">entries</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">is_a?</span> <span class="ruby-constant">Hash</span>
+          <span class="ruby-identifier">plugin</span>.<span class="ruby-identifier">report_error</span> <span class="ruby-node">&quot;Expected dict at QSRegistration/#{kind}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>)
+          <span class="ruby-keyword kw">next</span>
+        <span class="ruby-keyword kw">end</span>
+        <span class="ruby-identifier">klass</span> = <span class="ruby-identifier">registration_types</span>[<span class="ruby-identifier">kind</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Registration</span>
+        <span class="ruby-identifier">plugin</span>.<span class="ruby-identifier">report_error</span> <span class="ruby-node">&quot;Empty declaration QSRegistration/#{kind}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">plugin</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">entries</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">id</span>, <span class="ruby-identifier">entry</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">results</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">kind</span>, <span class="ruby-identifier">entry</span>, <span class="ruby-identifier">id</span>, <span class="ruby-identifier">parent</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">results</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

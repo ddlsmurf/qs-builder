@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>run_template (basic/init.rb)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File basic/init.rb, line 35</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">run_template</span> <span class="ruby-identifier">data</span>
+    <span class="ruby-ivar">@root_context</span> = <span class="ruby-constant">MediaContext</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">data</span>, <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-ivar">@logger</span> = <span class="ruby-constant">App</span>.<span class="ruby-identifier">require_one</span> <span class="ruby-identifier">:logger</span>
+    <span class="ruby-ivar">@writer</span> = <span class="ruby-constant">App</span>.<span class="ruby-identifier">require_one</span> <span class="ruby-identifier">:template_writer</span>, <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">__FILE__</span>).<span class="ruby-identifier">dirname</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;views&quot;</span>
+    <span class="ruby-identifier">plugins</span> = {}
+    <span class="ruby-identifier">plugins_by_app</span> = {}
+    <span class="ruby-identifier">data</span>[<span class="ruby-identifier">:bundles</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">bundle</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">plugins</span>[<span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">id</span>] = <span class="ruby-identifier">bundle</span>
+      <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;redirect&quot;</span>, <span class="ruby-identifier">bundle</span>, <span class="ruby-ivar">@root_context</span>.<span class="ruby-identifier">make_path</span>(<span class="ruby-value str">&quot;Plugin&quot;</span>, <span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">name</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.txt&quot;</span>, <span class="ruby-identifier">:destination</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;home&quot;</span>
+      <span class="ruby-node">%w[tech preferences commands home]</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sub_page</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">run_erb_template</span> <span class="ruby-node">&quot;plugin/#{sub_page}&quot;</span>, <span class="ruby-identifier">bundle</span>, <span class="ruby-ivar">@root_context</span>.<span class="ruby-identifier">path_for</span>(<span class="ruby-identifier">bundle</span>, <span class="ruby-identifier">sub_page</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.txt&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">related_bundle_ids</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">id</span><span class="ruby-operator">|</span> (<span class="ruby-identifier">plugins_by_app</span>[<span class="ruby-identifier">id</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">bundle</span> }
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">plugins_by_app</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">app_id</span>, <span class="ruby-identifier">plugins_of_app</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">app</span> = <span class="ruby-constant">QS</span><span class="ruby-operator">::</span><span class="ruby-constant">Registry</span>.<span class="ruby-identifier">get_app</span> <span class="ruby-identifier">app_id</span>
+      <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;redirect&quot;</span>, <span class="ruby-identifier">app</span>, <span class="ruby-ivar">@root_context</span>.<span class="ruby-identifier">make_path</span>(<span class="ruby-value str">&quot;Bundle&quot;</span>, <span class="ruby-identifier">app</span>.<span class="ruby-identifier">name</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.txt&quot;</span>, <span class="ruby-identifier">:destination</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;home&quot;</span>
+      <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;Bundle/home&quot;</span>, <span class="ruby-identifier">app</span>, <span class="ruby-ivar">@root_context</span>.<span class="ruby-identifier">path_for</span>(<span class="ruby-identifier">app</span>, <span class="ruby-value str">&quot;home&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;.txt&quot;</span>, <span class="ruby-identifier">:plugins</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">plugins_of_app</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;ListOfKeys&quot;</span>, <span class="ruby-identifier">data</span>, <span class="ruby-value str">&quot;ListOfKeys.htm&quot;</span>
+    <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;ListOfWarnings&quot;</span>, <span class="ruby-identifier">data</span>, <span class="ruby-value str">&quot;ListOfWarnings.txt&quot;</span>
+    <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;ListOfApplications&quot;</span>, <span class="ruby-identifier">data</span>, <span class="ruby-value str">&quot;ListOfApplications.txt&quot;</span>
+    <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;ListOfRegistrations&quot;</span>, <span class="ruby-identifier">data</span>, <span class="ruby-value str">&quot;ListOfRegistrations.txt&quot;</span>
+    <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;ListOfMediators&quot;</span>, <span class="ruby-identifier">data</span>, <span class="ruby-value str">&quot;ListOfMediators.txt&quot;</span>
+    <span class="ruby-identifier">run_erb_template</span> <span class="ruby-value str">&quot;ListOfPlugins&quot;</span>, <span class="ruby-identifier">plugins</span>, <span class="ruby-value str">&quot;ListOfPlugins.txt&quot;</span>
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">data</span>[<span class="ruby-identifier">:config</span>][<span class="ruby-identifier">:wiki_prefix</span>]
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Dont forget to use the prefix #{data[:config][:wiki_prefix].inspect} when uploading!&quot;</span>
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-value str">&quot;Warning, using the wiki's global namespace, consider using --wiki-prefix Prefix/Name&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+  <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

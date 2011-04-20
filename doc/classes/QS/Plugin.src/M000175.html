@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>validate (QS::Plugin)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File lib/qs/objects.rb, line 365</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">validate</span>
+      <span class="ruby-identifier">check_keys</span> <span class="ruby-identifier">qs_plugin</span>, <span class="ruby-value str">&quot;QSPlugIn&quot;</span>, <span class="ruby-node">%w[author categories description extendedDescription helpPage hidden icon infoFile relatedBundles secret]</span>
+      <span class="ruby-node">%w[QSActionsTemplate QSDefaultsTemplate QSPresetAdditionsTemplate QSRegistrationTemplate QSRequirementsTemplate]</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">report_error</span> <span class="ruby-node">&quot;Unknown key: #{k.inspect}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@info</span>[<span class="ruby-identifier">k</span>]
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reg</span> = <span class="ruby-keyword kw">self</span>[<span class="ruby-value str">'QSRegistration'</span>]
+        <span class="ruby-node">%w[QSPreferencePanesTemplate]</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+          <span class="ruby-identifier">report_error</span> <span class="ruby-node">&quot;Unknown key: QSRegistration/#{k.inspect}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@info</span>[<span class="ruby-identifier">k</span>]
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@info</span>[<span class="ruby-value str">'QSRegistryTables'</span>]
+        <span class="ruby-identifier">report_error</span> <span class="ruby-value str">&quot;Check QSRegistryTables shouldn't be QSRegistration/QSRegistryHeaders instead&quot;</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>
