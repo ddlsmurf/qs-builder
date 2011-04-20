@@ -1,6 +1,13 @@
 require 'yaml'
 
 class CliLogger
+  class ReraisedSilentException < StandardError
+    attr_accessor :original
+    def initialize orig
+      self.original = orig
+    end
+    def message ; @original.message ; end
+  end
   LEVELS = %w[debug info warn error fatal].map(&:to_sym)
   @@longest_level_name = LEVELS.map{ |e| e.to_s.length }.max()
   attr_accessor :minimum, :prefix
@@ -64,19 +71,21 @@ class CliLogger
     res = nil
     begin
       res = yield
+    rescue ReraisedSilentException => r
+      raise
     rescue Exception => e
       log_exception(nil, e)
       unindent_at(@minimum_when_failed || @minimum)
-      raise
+      raise ReraisedSilentException.new(e)
     end
     unindent_at(@minimum)
     res
   end
   CALLERS_TO_IGNORE = [ # :nodoc:
-    /lib\/(cli_)?app\.rb$/,
+    /lib\/app|cli_(app|logger)\.rb$/,
   ]
   def log_exception message, ex, level = :error
-    log(message || "Unexpected exception", level, :exception => ex, :backtrace => Array(ex.backtrace. # Thank you sinatra
+    log(message || "Unexpected exception", level, ex, Array(ex.backtrace. # Thank you sinatra
       map    { |line| line.split(/:(?=\d|in )/) }.
       reject { |file,line,func| CALLERS_TO_IGNORE.any? { |pattern| file =~ pattern } }.
       map    { |*a| a.join(": ") }))

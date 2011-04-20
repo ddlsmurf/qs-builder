@@ -89,8 +89,12 @@ App.register do
       $stderr.puts(args)
       exit 1
     end
-    merged_config = App.require_one :config
-    App.call_extension_point :startup, ARGV, merged_config
-    App.call_extension_point :run, ARGV, merged_config
+    begin
+      merged_config = App.require_one :config
+      App.call_extension_point :startup, ARGV, merged_config
+      App.call_extension_point :run, ARGV, merged_config
+    rescue CliLogger::ReraisedSilentException => e
+      exit 1
+    end
   end
 end
