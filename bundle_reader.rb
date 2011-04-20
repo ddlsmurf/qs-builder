@@ -18,7 +18,6 @@ require "lib/bundle_loader"
 require "lib/hash_extensions"
 require "lib/qs"
 require "helpers/helpers"
-#require "helpers/qs_helpers"
 
 BUNDLE_RESOURCES_TO_MERGE = %w[ResourceLocations.plist QSKindDescriptions.plist QSRegistration.plist
   QSAction.name.strings QSAction.commandFormat.strings QSAction.description.strings
@@ -33,7 +32,7 @@ DEFAULTS = {
   :plist => "plugins.plist",
   :templates => [],
 }
-TEMPLATE_CONFIG = {:trim => "<>"}
+TILT_TEMPLATE_CONFIG = {:trim => "<>"}
 
 class Bundle
   def keys
@@ -89,7 +88,7 @@ App.register do # Support for YAML and PList formats
     }
   end
   def template_readers
-    reader = lambda { |filename| Tilt::new(filename, nil, TEMPLATE_CONFIG) }
+    reader = lambda { |filename| Tilt::new(filename, nil, TILT_TEMPLATE_CONFIG) }
     result = {}
     Tilt.mappings.keys.each { |k| result[k.to_sym] = reader}
     result
