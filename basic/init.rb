@@ -29,7 +29,7 @@ class TemplateConfig
   end
   def config ; @data[:config] || {} ; end
   def make_path *segments
-    segments.map { |e| MediaWiki::wiki_to_uri(e.to_s.gsub("*", "_STAR_").gsub(/[^a-z0-9_-]/i, "_")) }.join "/"
+    segments.map { |e| MediaWiki::wiki_to_uri(e.to_s.gsub("*", "_STAR_").gsub(/[^a-z0-9_.-]/i, "_")) }.join "/"
   end
   def url *segments
     path = make_path *segments
