@@ -5,14 +5,17 @@
 
 <html>
 <head>
-  <title>bundle_info_name (Bundle)</title>
+  <title>new (Bundle)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/bundle.rb, line 10</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">bundle_info_name</span> <span class="ruby-identifier">path</span>
-    <span class="ruby-identifier">path</span> <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;Contents/Info.plist&quot;</span>
+  <pre><span class="ruby-comment cmt"># File lib/bundle.rb, line 4</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">path</span>, <span class="ruby-identifier">info</span>
+    <span class="ruby-ivar">@path</span> = <span class="ruby-identifier">path</span>
+    <span class="ruby-ivar">@info</span> = <span class="ruby-identifier">info</span>
+    <span class="ruby-ivar">@file_name</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-value str">&quot;.qsplugin&quot;</span>).<span class="ruby-identifier">to_s</span>
+    <span class="ruby-ivar">@file_name</span> = <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@file_name</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;null&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

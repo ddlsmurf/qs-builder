@@ -5,22 +5,15 @@
 
 <html>
 <head>
-  <title>html_links_to_wikimedia (MediaWikiHelpers)</title>
+  <title>overiddable_template (MediaWikiHelpers)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 198</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">html_links_to_wikimedia</span> <span class="ruby-identifier">str</span>
-    <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">str</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">str</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
-    <span class="ruby-identifier">str</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/&lt;\s*a\b([^&gt;]+)&gt;/i</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">match</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">attrs</span> = {}
-      <span class="ruby-identifier">$1</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/([^ =]+)=(?:'([^']+)'|&quot;([^&quot;]+)&quot;|([^ &gt;]+))/i</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">matches</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">$1</span>] = <span class="ruby-identifier">matches</span>.<span class="ruby-identifier">drop</span>(<span class="ruby-value">2</span>).<span class="ruby-identifier">select</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>}.<span class="ruby-identifier">first</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Failed to understand html #{str.inspect}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">attrs</span>[<span class="ruby-value str">'href'</span>]
-      <span class="ruby-node">&quot;[#{attrs['href']} &quot;</span>
-    <span class="ruby-keyword kw">end</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/&lt;\/a&gt;/i</span>, <span class="ruby-value str">&quot;]&quot;</span>)
+  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 42</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">overiddable_template</span> <span class="ruby-identifier">url</span>, <span class="ruby-identifier">content_if_neither_exists</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">override_name</span> = <span class="ruby-node">&quot;#{url}_Manual&quot;</span>
+    <span class="ruby-identifier">if_exists</span> <span class="ruby-identifier">override_name</span>, <span class="ruby-identifier">include_template</span>(<span class="ruby-identifier">override_name</span>), <span class="ruby-identifier">if_exists</span>(<span class="ruby-identifier">url</span>, <span class="ruby-identifier">include_template</span>(<span class="ruby-identifier">url</span>), <span class="ruby-identifier">content_if_neither_exists</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

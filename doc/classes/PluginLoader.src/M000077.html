@@ -5,22 +5,17 @@
 
 <html>
 <head>
-  <title>warn_duplicate_bundle (PluginLoader)</title>
+  <title>new (PluginLoader)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File bundle_reader.rb, line 298</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">warn_duplicate_bundle</span> <span class="ruby-identifier">bundle</span>, <span class="ruby-identifier">extras</span>
-    <span class="ruby-identifier">loaded</span> = <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>)
-      <span class="ruby-identifier">extras</span> = <span class="ruby-identifier">extras</span>.<span class="ruby-identifier">dup</span>
-      <span class="ruby-identifier">loaded</span> = <span class="ruby-identifier">extras</span>.<span class="ruby-identifier">shift</span>()
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">loaded</span> = <span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">inspect</span>
-      <span class="ruby-identifier">extras</span> = <span class="ruby-identifier">extras</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:inspect</span>)
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Duplicate bundles for id #{bundle.is_a?(String) ? bundle : bundle.id}&quot;</span>, <span class="ruby-value str">'loaded'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">loaded</span>, <span class="ruby-value str">'ignored'</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">extras</span>
+  <pre><span class="ruby-comment cmt"># File bundle_reader.rb, line 292</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">search_path</span>, <span class="ruby-identifier">readers</span>, <span class="ruby-identifier">logger</span>
+    <span class="ruby-keyword kw">super</span> <span class="ruby-identifier">search_path</span>, <span class="ruby-identifier">readers</span>
+    <span class="ruby-ivar">@readers</span> = <span class="ruby-identifier">readers</span>
+    <span class="ruby-ivar">@logger</span> = <span class="ruby-identifier">logger</span>
+    <span class="ruby-ivar">@registry</span> = <span class="ruby-keyword kw">nil</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

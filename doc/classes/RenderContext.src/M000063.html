@@ -5,18 +5,15 @@
 
 <html>
 <head>
-  <title>partial_enum (RenderContext)</title>
+  <title>render (RenderContext)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 64</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">partial_enum</span> <span class="ruby-identifier">view_name</span>, <span class="ruby-identifier">enum</span>, <span class="ruby-identifier">locals</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
-    <span class="ruby-identifier">result</span> = []
-    <span class="ruby-identifier">did_any</span> = <span class="ruby-constant">EnumExtension</span>.<span class="ruby-identifier">enumerate_over</span>(<span class="ruby-identifier">enum</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">item</span>, <span class="ruby-identifier">index</span>, <span class="ruby-identifier">first</span>, <span class="ruby-identifier">alt</span>, <span class="ruby-identifier">last</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">partial</span>(<span class="ruby-identifier">view_name</span>, <span class="ruby-identifier">item</span>, {<span class="ruby-identifier">:is_first</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">first</span>, <span class="ruby-identifier">:index</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">index</span>, <span class="ruby-identifier">:is_last</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">last</span>, <span class="ruby-identifier">:is_alt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">alt</span>, <span class="ruby-identifier">:list</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">enum</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">locals</span>), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">did_any</span> <span class="ruby-value">? </span><span class="ruby-identifier">result</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 56</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span> <span class="ruby-identifier">view_name</span>, <span class="ruby-identifier">locals</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+    <span class="ruby-identifier">template</span> = <span class="ruby-identifier">writer</span>.<span class="ruby-identifier">load_template</span>(<span class="ruby-identifier">view_name</span>)
+    <span class="ruby-identifier">template</span>.<span class="ruby-identifier">render</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">locals</span>.<span class="ruby-identifier">merge</span>({<span class="ruby-identifier">:this</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">this</span>}), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

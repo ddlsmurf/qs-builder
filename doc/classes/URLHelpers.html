@@ -72,6 +72,12 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+Helper methods to build paths and URLs to <a href="QS.html">QS</a> objects
+</p>
+
+    </div>
 
 
    </div>
@@ -80,11 +86,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000137">get_qs_segments</a>&nbsp;&nbsp;
-      <a href="#M000136">make_path</a>&nbsp;&nbsp;
-      <a href="#M000134">path_for</a>&nbsp;&nbsp;
-      <a href="#M000133">url</a>&nbsp;&nbsp;
-      <a href="#M000135">url_for</a>&nbsp;&nbsp;
+      <a href="#M000123">get_qs_segments</a>&nbsp;&nbsp;
+      <a href="#M000119">path</a>&nbsp;&nbsp;
+      <a href="#M000121">path_for</a>&nbsp;&nbsp;
+      <a href="#M000120">url</a>&nbsp;&nbsp;
+      <a href="#M000122">url_for</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -113,73 +119,104 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000137" class="method-detail">
-        <a name="M000137"></a>
+      <div id="method-M000123" class="method-detail">
+        <a name="M000123"></a>
 
         <div class="method-heading">
-          <a href="URLHelpers.src/M000137.html" target="Code" class="method-signature"
-            onclick="popupCode('URLHelpers.src/M000137.html');return false;">
-          <span class="method-name">get_qs_segments</span><span class="method-args">(obj, type)</span>
+          <a href="URLHelpers.src/M000123.html" target="Code" class="method-signature"
+            onclick="popupCode('URLHelpers.src/M000123.html');return false;">
+          <span class="method-name">get_qs_segments</span><span class="method-args">(obj, type = nil)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Build an array of string <a href="URLHelpers.html#M000119">path</a>
+segments for an object appropriate as <a
+href="URLHelpers.html#M000119">path</a> segments
+</p>
+<dl>
+<dt>obj</dt><dd>Object, usually a <a href="QS/QSObject.html">QS::QSObject</a> for which a
+<a href="URLHelpers.html#M000119">path</a> is to be generated
+
+</dd>
+<dt>type</dt><dd>optional string suffix to append to <a
+href="URLHelpers.html#M000119">path</a> segments
+
+</dd>
+</dl>
         </div>
       </div>
 
-      <div id="method-M000136" class="method-detail">
-        <a name="M000136"></a>
+      <div id="method-M000119" class="method-detail">
+        <a name="M000119"></a>
 
         <div class="method-heading">
-          <a href="URLHelpers.src/M000136.html" target="Code" class="method-signature"
-            onclick="popupCode('URLHelpers.src/M000136.html');return false;">
-          <span class="method-name">make_path</span><span class="method-args">(*segments)</span>
+          <a href="URLHelpers.src/M000119.html" target="Code" class="method-signature"
+            onclick="popupCode('URLHelpers.src/M000119.html');return false;">
+          <span class="method-name">path</span><span class="method-args">(*segments)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Make a FS-safe <a href="URLHelpers.html#M000119">path</a> string from the
+provided segments
+</p>
         </div>
       </div>
 
-      <div id="method-M000134" class="method-detail">
-        <a name="M000134"></a>
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
 
         <div class="method-heading">
-          <a href="URLHelpers.src/M000134.html" target="Code" class="method-signature"
-            onclick="popupCode('URLHelpers.src/M000134.html');return false;">
+          <a href="URLHelpers.src/M000121.html" target="Code" class="method-signature"
+            onclick="popupCode('URLHelpers.src/M000121.html');return false;">
           <span class="method-name">path_for</span><span class="method-args">(obj, type = nil)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Make a <a href="URLHelpers.html#M000119">path</a> for the provided <a
+href="QS/QSObject.html">QS::QSObject</a>
+</p>
         </div>
       </div>
 
-      <div id="method-M000133" class="method-detail">
-        <a name="M000133"></a>
+      <div id="method-M000120" class="method-detail">
+        <a name="M000120"></a>
 
         <div class="method-heading">
-          <a href="URLHelpers.src/M000133.html" target="Code" class="method-signature"
-            onclick="popupCode('URLHelpers.src/M000133.html');return false;">
+          <a href="URLHelpers.src/M000120.html" target="Code" class="method-signature"
+            onclick="popupCode('URLHelpers.src/M000120.html');return false;">
           <span class="method-name">url</span><span class="method-args">(*segments)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Build the <a href="URLHelpers.html#M000120">url</a> from the provided <a
+href="URLHelpers.html#M000119">path</a> segments
+</p>
         </div>
       </div>
 
-      <div id="method-M000135" class="method-detail">
-        <a name="M000135"></a>
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
 
         <div class="method-heading">
-          <a href="URLHelpers.src/M000135.html" target="Code" class="method-signature"
-            onclick="popupCode('URLHelpers.src/M000135.html');return false;">
+          <a href="URLHelpers.src/M000122.html" target="Code" class="method-signature"
+            onclick="popupCode('URLHelpers.src/M000122.html');return false;">
           <span class="method-name">url_for</span><span class="method-args">(obj, type = nil)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+Make a <a href="URLHelpers.html#M000119">path</a> for the provided <a
+href="QS/QSObject.html">QS::QSObject</a>
+</p>
         </div>
       </div>
 

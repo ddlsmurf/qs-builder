@@ -5,21 +5,14 @@
 
 <html>
 <head>
-  <title>add_to_option_parser (ConfigBuilder)</title>
+  <title>on (ConfigBuilder)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/cli_app.rb, line 17</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_to_option_parser</span> <span class="ruby-identifier">parser</span>, <span class="ruby-identifier">default_group_name</span> = <span class="ruby-value str">&quot;General Options&quot;</span>
-    <span class="ruby-identifier">keys</span> = <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">sort</span>
-    <span class="ruby-identifier">keys</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">shift</span>() <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span>
-    <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">label</span> = <span class="ruby-identifier">k</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_group_name</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-value str">&quot;&quot;</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">separator</span> <span class="ruby-node">&quot;#{label}:&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">label</span>
-      <span class="ruby-ivar">@opts</span>[<span class="ruby-identifier">k</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span> <span class="ruby-identifier">parser</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:on</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">o</span>[<span class="ruby-value">0</span>], <span class="ruby-operator">&amp;</span><span class="ruby-identifier">o</span>[<span class="ruby-value">1</span>]) }
-    <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/cli_app.rb, line 14</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">on</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+    (<span class="ruby-ivar">@opts</span>[<span class="ruby-ivar">@group_stack</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">args</span>, <span class="ruby-identifier">block</span>]
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

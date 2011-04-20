@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+<head>
+  <title>flush_table (MediaWikiTableHelpers::Table)</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+</head>
+<body class="standalone-code">
+  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_table_helpers.rb, line 110</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush_table</span>
+      <span class="ruby-identifier">last_index</span> = <span class="ruby-ivar">@buffered_rows</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+      <span class="ruby-ivar">@col_count</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">running_since</span> = <span class="ruby-ivar">@running_spans</span>[<span class="ruby-identifier">c</span>]
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">running_since</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">last_index</span>
+          <span class="ruby-identifier">row</span> = <span class="ruby-ivar">@buffered_rows</span>[<span class="ruby-identifier">running_since</span>]
+          <span class="ruby-identifier">span</span> = {<span class="ruby-identifier">:rowspan</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">last_index</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">running_since</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">to_s</span>}
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">row</span>.<span class="ruby-identifier">length</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span>
+            <span class="ruby-identifier">row</span>[<span class="ruby-identifier">c</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">span</span>
+          <span class="ruby-keyword kw">else</span>
+            <span class="ruby-identifier">row</span>[<span class="ruby-identifier">c</span>][<span class="ruby-value">3</span>].<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">span</span>)
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-ivar">@buffered_rows</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span> <span class="ruby-identifier">write_row</span> <span class="ruby-identifier">r</span> }
+    <span class="ruby-keyword kw">end</span></pre>
+</body>
+</html>

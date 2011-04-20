@@ -80,11 +80,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000220">code</a>&nbsp;&nbsp;
-      <a href="#M000222">enum_with_sep</a>&nbsp;&nbsp;
-      <a href="#M000218">when_not_empty</a>&nbsp;&nbsp;
-      <a href="#M000219">wrap</a>&nbsp;&nbsp;
-      <a href="#M000221">wrap_tag</a>&nbsp;&nbsp;
+      <a href="#M000222">code</a>&nbsp;&nbsp;
+      <a href="#M000224">enum_with_sep</a>&nbsp;&nbsp;
+      <a href="#M000220">when_not_empty</a>&nbsp;&nbsp;
+      <a href="#M000221">wrap</a>&nbsp;&nbsp;
+      <a href="#M000223">wrap_tag</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -106,59 +106,63 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000220" class="method-detail">
-        <a name="M000220"></a>
-
-        <div class="method-heading">
-          <a href="Helpers.src/M000220.html" target="Code" class="method-signature"
-            onclick="popupCode('Helpers.src/M000220.html');return false;">
-          <span class="method-name">code</span><span class="method-args">(text)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-        </div>
-      </div>
-
       <div id="method-M000222" class="method-detail">
         <a name="M000222"></a>
 
         <div class="method-heading">
           <a href="Helpers.src/M000222.html" target="Code" class="method-signature"
             onclick="popupCode('Helpers.src/M000222.html');return false;">
+          <span class="method-name">code</span><span class="method-args">(text)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+wrapes in &lt;<a href="Helpers.html#M000222">code</a>&gt; tags
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
+
+        <div class="method-heading">
+          <a href="Helpers.src/M000224.html" target="Code" class="method-signature"
+            onclick="popupCode('Helpers.src/M000224.html');return false;">
           <span class="method-name">enum_with_sep</span><span class="method-args">(enumerable, last_sep = ' and ', sep = ', ') {|*arguments| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+if enumerable is nil, return nil if enumerable has any items, concatenate
+them, separating them using sep and last_sep
+</p>
+<dl>
+<dt>sep</dt><dd>separator to use between all items except the last and before-last
+
+</dd>
+<dt>last_sep</dt><dd>is the separator to use between the before-last and last items
+
+</dd>
+</dl>
         </div>
       </div>
 
-      <div id="method-M000218" class="method-detail">
-        <a name="M000218"></a>
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
 
         <div class="method-heading">
-          <a href="Helpers.src/M000218.html" target="Code" class="method-signature"
-            onclick="popupCode('Helpers.src/M000218.html');return false;">
+          <a href="Helpers.src/M000220.html" target="Code" class="method-signature"
+            onclick="popupCode('Helpers.src/M000220.html');return false;">
           <span class="method-name">when_not_empty</span><span class="method-args">(value) {|value| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
-        </div>
-      </div>
-
-      <div id="method-M000219" class="method-detail">
-        <a name="M000219"></a>
-
-        <div class="method-heading">
-          <a href="Helpers.src/M000219.html" target="Code" class="method-signature"
-            onclick="popupCode('Helpers.src/M000219.html');return false;">
-          <span class="method-name">wrap</span><span class="method-args">(text = nil, prefix = &quot;&lt;nowiki&gt;&quot;, suffix = &quot;&lt;/nowiki&gt;&quot;) {|text| ...}</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
+          <p>
+yields value if its to_s has length
+</p>
         </div>
       </div>
 
@@ -168,11 +172,33 @@
         <div class="method-heading">
           <a href="Helpers.src/M000221.html" target="Code" class="method-signature"
             onclick="popupCode('Helpers.src/M000221.html');return false;">
+          <span class="method-name">wrap</span><span class="method-args">(text = nil, prefix = &quot;&lt;nowiki&gt;&quot;, suffix = &quot;&lt;/nowiki&gt;&quot;) {|text| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+<a href="Helpers.html#M000221">wrap</a> the text in prefix and suffix if
+its not empty. if a block is given, its return value is used as the text if
+non false
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
+
+        <div class="method-heading">
+          <a href="Helpers.src/M000223.html" target="Code" class="method-signature"
+            onclick="popupCode('Helpers.src/M000223.html');return false;">
           <span class="method-name">wrap_tag</span><span class="method-args">(text, tag = &quot;nowiki&quot;, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+wraps in html like tags. does not escape text.
+</p>
         </div>
       </div>
 

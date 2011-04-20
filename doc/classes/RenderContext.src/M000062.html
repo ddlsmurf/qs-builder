@@ -5,15 +5,14 @@
 
 <html>
 <head>
-  <title>render (RenderContext)</title>
+  <title>sub_context_for (RenderContext)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 56</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span> <span class="ruby-identifier">view_name</span>, <span class="ruby-identifier">locals</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
-    <span class="ruby-identifier">template</span> = <span class="ruby-identifier">writer</span>.<span class="ruby-identifier">load_template</span>(<span class="ruby-identifier">view_name</span>)
-    <span class="ruby-identifier">template</span>.<span class="ruby-identifier">render</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">locals</span>.<span class="ruby-identifier">merge</span>({<span class="ruby-identifier">:this</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">this</span>}), <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 52</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sub_context_for</span> <span class="ruby-identifier">new_this</span>
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">new_this</span>, <span class="ruby-keyword kw">self</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

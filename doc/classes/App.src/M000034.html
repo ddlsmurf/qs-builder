@@ -5,15 +5,25 @@
 
 <html>
 <head>
-  <title>extensions_for_point (App)</title>
+  <title>extension_point (App)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 61</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extensions_for_point</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span> <span class="ruby-comment cmt"># :yields: extension</span>
-      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">enum_for</span>(<span class="ruby-identifier">:extensions_for_point</span>, <span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">block_given?</span>
-      <span class="ruby-identifier">extension_point</span>(<span class="ruby-identifier">name</span>)[<span class="ruby-identifier">:handlers</span>].<span class="ruby-identifier">each</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 46</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extension_point</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">options</span> = {}
+      <span class="ruby-identifier">name</span> = <span class="ruby-identifier">name</span>.<span class="ruby-identifier">to_sym</span>
+      <span class="ruby-identifier">point</span> = <span class="ruby-ivar">@extension_points</span>[<span class="ruby-identifier">name</span>]
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">point</span>
+        <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">empty?</span>
+          <span class="ruby-identifier">handlers</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:handlers</span>)
+          <span class="ruby-identifier">point</span>[<span class="ruby-identifier">:handlers</span>] = (<span class="ruby-identifier">handlers</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">point</span>[<span class="ruby-identifier">:handlers</span>]).<span class="ruby-identifier">uniq</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">handlers</span>
+          <span class="ruby-identifier">point</span>.<span class="ruby-identifier">merge!</span>(<span class="ruby-identifier">options</span>)
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-identifier">point</span> = <span class="ruby-ivar">@extension_points</span>[<span class="ruby-identifier">name</span>] = { <span class="ruby-identifier">:handlers</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">Array</span>(<span class="ruby-ivar">@extensions</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">name</span>) }) }.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>)
+      <span class="ruby-keyword kw">end</span>
+      <span class="ruby-identifier">point</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

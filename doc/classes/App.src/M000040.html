@@ -5,67 +5,23 @@
 
 <html>
 <head>
-  <title>parse_options (App)</title>
+  <title>load_extensions (App)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File wikirobot.rb, line 68</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">parse_options</span>
-    <span class="ruby-ivar">@options</span> = {
-      <span class="ruby-identifier">:wiki_url</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;https://192.168.0.125/api.php&quot;</span>,
-      <span class="ruby-identifier">:wiki_creds</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'guest'</span>, <span class="ruby-value str">'guest'</span>],
-      <span class="ruby-identifier">:wiki_prefix</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Auto/&quot;</span>,
-      <span class="ruby-identifier">:wiki_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'Robot commit'</span>,
-      <span class="ruby-identifier">:scanner</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">FolderScanner</span><span class="ruby-operator">::</span><span class="ruby-constant">Options</span>.<span class="ruby-identifier">new</span>
-    }
-    <span class="ruby-identifier">arguments</span> = <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">opts</span><span class="ruby-operator">|</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-value str">&quot;Upload pages and files to a MediaWiki server\nUsage: wiki.rb [options] folders_to_upload\n.txt get their extension removed.&quot;</span>
-
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--wiki URL&quot;</span>, <span class="ruby-value str">&quot;Path to wiki api.php&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:wiki_url</span>] = <span class="ruby-identifier">v</span>
+  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 129</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_extensions</span> <span class="ruby-identifier">path</span>
+      <span class="ruby-identifier">anything</span> = <span class="ruby-keyword kw">false</span>
+      <span class="ruby-identifier">extension_path</span> = (<span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'init.rb'</span>).<span class="ruby-identifier">expand_path</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extension_path</span>.<span class="ruby-identifier">file?</span>
+        <span class="ruby-identifier">call_extension_point</span> <span class="ruby-identifier">:extension_will_load</span>, <span class="ruby-identifier">extension_path</span>
+        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">require</span> <span class="ruby-identifier">extension_path</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/.rb$/i</span>, <span class="ruby-value str">&quot;&quot;</span>)
+          <span class="ruby-identifier">anything</span> = <span class="ruby-keyword kw">true</span>
+          <span class="ruby-identifier">call_extension_point</span> <span class="ruby-identifier">:extension_did_load</span>, <span class="ruby-identifier">extension_path</span>
+        <span class="ruby-keyword kw">end</span>
       <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-c&quot;</span>, <span class="ruby-value str">&quot;--credentials USER&quot;</span>, <span class="ruby-value str">&quot;Username to access the wiki&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">res</span> = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;:&quot;</span>, <span class="ruby-value">2</span>)
-        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Credentials must be in the format user:pass&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Credential username cannot be empty&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-operator">!</span><span class="ruby-identifier">res</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">empty?</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:wiki_creds</span>] = <span class="ruby-identifier">res</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-k&quot;</span>, <span class="ruby-value str">&quot;--use-keychain ITEM_NAME&quot;</span>, <span class="ruby-value str">&quot;Load credentials from Mac OS X Keychain&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:keychain</span>] = <span class="ruby-identifier">v</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-m&quot;</span>, <span class="ruby-value str">&quot;--comment MSG&quot;</span>, <span class="ruby-value str">&quot;Comment to use on wiki page updates&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:wiki_comment</span>] = <span class="ruby-identifier">v</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;:&quot;</span>)
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-p&quot;</span>, <span class="ruby-value str">&quot;--prefix PREFIX&quot;</span>, <span class="ruby-value str">&quot;Always add prefix to any Page name&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:wiki_prefix</span>] = <span class="ruby-identifier">v</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-l&quot;</span>, <span class="ruby-value str">&quot;--list [PREFIX]&quot;</span>, <span class="ruby-value str">&quot;List pages matching PREFIX and exit&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:ls</span>] = <span class="ruby-identifier">v</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--track FILENAME&quot;</span>, <span class="ruby-value str">&quot;Track edits using FILENAME. Using this means you get warnings if someone else edited a page you are uploading, and only upload changed files.&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:tracker</span>] = <span class="ruby-identifier">v</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--force&quot;</span>, <span class="ruby-value str">&quot;Track edits using FILENAME. Using this means you get warnings if someone else edited a page you overwrote.&quot;</span>) <span class="ruby-keyword kw">do</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:force</span>] = <span class="ruby-keyword kw">true</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;--delete-all PREFIX&quot;</span>, <span class="ruby-value str">&quot;Delete all pages matching PREFIX and exit&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:delete_all</span>] = <span class="ruby-identifier">v</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">opts</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">&quot;-D&quot;</span>, <span class="ruby-value str">&quot;--dry-run&quot;</span>, <span class="ruby-value str">&quot;Don't actually change anything on the server&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">v</span><span class="ruby-operator">|</span>
-        <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:dry_run</span>] = <span class="ruby-keyword kw">true</span>
-      <span class="ruby-keyword kw">end</span>
-      <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:scanner</span>].<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">opts</span>)
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">begin</span>
-      <span class="ruby-identifier">arguments</span>.<span class="ruby-identifier">parse!</span>
-    <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">SystemExit</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sex</span>
-      <span class="ruby-identifier">exit</span> <span class="ruby-value">1</span>
-    <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Error: #{e}\n\n&quot;</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-identifier">arguments</span>
-      <span class="ruby-identifier">exit</span> <span class="ruby-value">1</span>
-    <span class="ruby-keyword kw">end</span>
-  <span class="ruby-keyword kw">end</span></pre>
+      <span class="ruby-identifier">anything</span>
+    <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,20 +5,16 @@
 
 <html>
 <head>
-  <title>get_all (App)</title>
+  <title>call_extension_point (App)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 99</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_all</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>
-      <span class="ruby-identifier">result</span> = []
-      <span class="ruby-identifier">each_handler</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
-        <span class="ruby-identifier">res</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
-        <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">res</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">nil?</span>
+  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 86</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">call_extension_point</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+      <span class="ruby-identifier">each_handler</span> <span class="ruby-identifier">name</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">e</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
       <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">result</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">reduce</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reducer</span>
-      <span class="ruby-identifier">result</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

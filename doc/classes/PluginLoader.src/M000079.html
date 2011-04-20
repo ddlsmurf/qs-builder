@@ -5,24 +5,31 @@
 
 <html>
 <head>
-  <title>load_bundle (PluginLoader)</title>
+  <title>load_bundle_localised_resources (PluginLoader)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File bundle_reader.rb, line 329</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_bundle</span> <span class="ruby-identifier">bundle_path</span>
-    <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Reading bundle #{bundle_path.to_s}&quot;</span> <span class="ruby-keyword kw">do</span>
-      <span class="ruby-constant">App</span>.<span class="ruby-identifier">call_extension_point</span> <span class="ruby-identifier">:bundle_will_load</span>, <span class="ruby-identifier">bundle_path</span>
-      <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">super</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>
-        <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Loaded #{result.id} main Info.plist&quot;</span>
-        <span class="ruby-identifier">load_bundle_localised_resources</span> <span class="ruby-identifier">result</span>
-        <span class="ruby-constant">App</span>.<span class="ruby-identifier">call_extension_point</span> <span class="ruby-identifier">:bundle_did_load</span>, <span class="ruby-identifier">result</span>
+  <pre><span class="ruby-comment cmt"># File bundle_reader.rb, line 309</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_bundle_localised_resources</span> <span class="ruby-identifier">bundle</span>
+    <span class="ruby-identifier">language_rx</span> = <span class="ruby-regexp re">/.*?\/([^\/]+)\.lproj\/([^\/]+)$/i</span>
+    <span class="ruby-identifier">res_paths</span> = <span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">bundle_resources</span>(<span class="ruby-value str">&quot;&quot;</span>)
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">res_paths</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-value str">&quot;Bundle has no resource paths&quot;</span>
+      <span class="ruby-keyword kw">return</span>
+    <span class="ruby-keyword kw">end</span>
+    <span class="ruby-identifier">loaded</span> = {}
+    <span class="ruby-identifier">loader</span> = <span class="ruby-constant">FileLoader</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">res_paths</span>, <span class="ruby-ivar">@readers</span>)
+    <span class="ruby-constant">BUNDLE_RESOURCES_TO_MERGE</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">resource</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">loader</span>.<span class="ruby-identifier">each_existing_readable</span>(<span class="ruby-node">&quot;{,*.lproj/,../}#{resource}&quot;</span>, <span class="ruby-identifier">:plist</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">path</span>, <span class="ruby-identifier">content</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">lang</span> = <span class="ruby-keyword kw">nil</span>
+        <span class="ruby-identifier">res_name</span> = <span class="ruby-identifier">resource</span>
+        <span class="ruby-identifier">lang</span>, <span class="ruby-identifier">res_name</span> = <span class="ruby-identifier">$1</span>, <span class="ruby-identifier">$2</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">=~</span> <span class="ruby-identifier">language_rx</span>
+        (<span class="ruby-identifier">loaded</span>[<span class="ruby-identifier">resource</span>] <span class="ruby-operator">||=</span> {})[<span class="ruby-identifier">lang</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>] = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">to_s</span>
+        <span class="ruby-identifier">bundle</span>.<span class="ruby-identifier">merge!</span>({<span class="ruby-identifier">:res</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">res_name</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">lang</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">content</span>}}})
       <span class="ruby-keyword kw">end</span>
     <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">result</span>
+    <span class="ruby-ivar">@logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-value str">&quot;Loaded bundle resources&quot;</span>, <span class="ruby-identifier">loaded</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">loaded</span>.<span class="ruby-identifier">empty?</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

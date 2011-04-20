@@ -5,23 +5,22 @@
 
 <html>
 <head>
-  <title>load_extensions (App)</title>
+  <title>require_one (App)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 129</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_extensions</span> <span class="ruby-identifier">path</span>
-      <span class="ruby-identifier">anything</span> = <span class="ruby-keyword kw">false</span>
-      <span class="ruby-identifier">extension_path</span> = (<span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">path</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">'init.rb'</span>).<span class="ruby-identifier">expand_path</span>
-      <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extension_path</span>.<span class="ruby-identifier">file?</span>
-        <span class="ruby-identifier">call_extension_point</span> <span class="ruby-identifier">:extension_will_load</span>, <span class="ruby-identifier">extension_path</span>
-        <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">require</span> <span class="ruby-identifier">extension_path</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/.rb$/i</span>, <span class="ruby-value str">&quot;&quot;</span>)
-          <span class="ruby-identifier">anything</span> = <span class="ruby-keyword kw">true</span>
-          <span class="ruby-identifier">call_extension_point</span> <span class="ruby-identifier">:extension_did_load</span>, <span class="ruby-identifier">extension_path</span>
-        <span class="ruby-keyword kw">end</span>
+  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 114</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">require_one</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>
+      <span class="ruby-identifier">reducer</span> = <span class="ruby-identifier">extension_point</span>(<span class="ruby-identifier">name</span>)[<span class="ruby-identifier">:mediator</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reducer</span>
+      <span class="ruby-identifier">result</span> = <span class="ruby-identifier">get_all</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>)
+      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reducer</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;Error: no extension provides #{name.inspect}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;Error: more than one extension provides #{name.inspect}, but no reducer&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">first</span>
       <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">anything</span>
+      <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;Error: no extension provides #{name.inspect}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">result</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

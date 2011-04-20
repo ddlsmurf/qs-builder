@@ -5,14 +5,15 @@
 
 <html>
 <head>
-  <title>on (ConfigBuilder)</title>
+  <title>new (ConfigBuilder)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/cli_app.rb, line 14</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">on</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
-    (<span class="ruby-ivar">@opts</span>[<span class="ruby-ivar">@group_stack</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span>] <span class="ruby-operator">||=</span> []) <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">args</span>, <span class="ruby-identifier">block</span>]
+  <pre><span class="ruby-comment cmt"># File lib/cli_app.rb, line 10</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">opts</span> = {}
+    <span class="ruby-ivar">@opts</span> = <span class="ruby-identifier">opts</span>
+    <span class="ruby-ivar">@group_stack</span> = []
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

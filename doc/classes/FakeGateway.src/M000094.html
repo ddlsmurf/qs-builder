@@ -5,28 +5,15 @@
 
 <html>
 <head>
-  <title>method_missing (FakeGateway)</title>
+  <title>new (FakeGateway)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File wikirobot.rb, line 49</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-identifier">res</span> = <span class="ruby-keyword kw">nil</span>
-    <span class="ruby-identifier">read_only_methods</span> = <span class="ruby-node">%w[login list page_rev_ids]</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_sym</span>)
-    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">read_only_methods</span>.<span class="ruby-identifier">index</span>(<span class="ruby-identifier">meth</span>)
-      <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@delegate</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">meth</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">meth</span>
-    <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:delete</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot; (Skipping delete of #{args.inspect} because of dry-run)&quot;</span>
-    <span class="ruby-keyword kw">when</span> <span class="ruby-identifier">:edit</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot; (Skipping upload of #{args[1].size} bytes to #{args[0].inspect}, options = #{args[2].inspect})&quot;</span>
-      <span class="ruby-identifier">res</span> = [<span class="ruby-value str">&quot;&quot;</span>]
-    <span class="ruby-keyword kw">else</span>
-      <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;!!! Unknown #{meth.inspect}&quot;</span>
-    <span class="ruby-keyword kw">end</span>
-    <span class="ruby-identifier">res</span>
+  <pre><span class="ruby-comment cmt"># File wikirobot.rb, line 45</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">host</span>
+    <span class="ruby-ivar">@host</span> = <span class="ruby-identifier">host</span>
+    <span class="ruby-ivar">@delegate</span> = <span class="ruby-constant">MediaWiki</span><span class="ruby-operator">::</span><span class="ruby-constant">Gateway</span>.<span class="ruby-identifier">new</span> <span class="ruby-identifier">host</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

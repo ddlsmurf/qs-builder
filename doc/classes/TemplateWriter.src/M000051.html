@@ -5,14 +5,16 @@
 
 <html>
 <head>
-  <title>write_to_output (TemplateWriter)</title>
+  <title>render_to (TemplateWriter)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 106</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_to_output</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>
-    <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">write_to_output</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">blk</span>
+  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 101</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_to</span> <span class="ruby-identifier">output_name</span>, <span class="ruby-identifier">view_name</span>, <span class="ruby-identifier">this</span>, <span class="ruby-identifier">context_klass</span> = <span class="ruby-constant">RenderContext</span>, <span class="ruby-identifier">locals</span> = {}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+    <span class="ruby-ivar">@writer</span>.<span class="ruby-identifier">write_to_output</span> <span class="ruby-identifier">output_name</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">file</span>.<span class="ruby-identifier">write</span>(<span class="ruby-identifier">render</span>(<span class="ruby-identifier">view_name</span>, <span class="ruby-identifier">this</span>, <span class="ruby-identifier">context_klass</span>, <span class="ruby-identifier">locals</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>))
+    <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

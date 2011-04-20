@@ -5,15 +5,14 @@
 
 <html>
 <head>
-  <title>list (MediaWikiHelpers)</title>
+  <title>youtube (MediaWikiHelpers)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 225</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">list</span>(<span class="ruby-identifier">enum</span>, <span class="ruby-identifier">depth</span> = <span class="ruby-value">1</span>)
-    <span class="ruby-identifier">prefix</span> = <span class="ruby-node">&quot;\n#{&quot;*&quot; * depth} &quot;</span>
-    <span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">enum</span> <span class="ruby-value">? </span><span class="ruby-identifier">enum</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">prefix</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">prefix</span>, <span class="ruby-value str">&quot;&quot;</span>)
+  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 79</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">youtube</span> <span class="ruby-identifier">id</span>
+    <span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">id</span>, <span class="ruby-value str">&quot;{{#ev:youtube|&quot;</span>, <span class="ruby-value str">&quot;}}&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

@@ -5,22 +5,24 @@
 
 <html>
 <head>
-  <title>file_to_wiki_info (App)</title>
+  <title>upload (App)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File wikirobot.rb, line 159</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_to_wiki_info</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">relative_path</span>
-    <span class="ruby-identifier">is_page</span> = <span class="ruby-identifier">name</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/\.txt$/i</span>
-    <span class="ruby-identifier">base_name</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">name</span>)
-    <span class="ruby-identifier">base_name</span> = <span class="ruby-identifier">base_name</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-value">-5</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">is_page</span>
-    <span class="ruby-identifier">base_name</span> = <span class="ruby-identifier">relative_path</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">base_name</span> <span class="ruby-operator">:</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">relative_path</span>, <span class="ruby-identifier">base_name</span>)
-    <span class="ruby-identifier">digest</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA2</span>.<span class="ruby-identifier">file</span>(<span class="ruby-identifier">name</span>).<span class="ruby-identifier">hexdigest</span>
-    { <span class="ruby-identifier">:server_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:wiki_prefix</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">base_name</span>,
-      <span class="ruby-identifier">:page?</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-identifier">is_page</span>,
-      <span class="ruby-identifier">:from</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">name</span>,
-      <span class="ruby-identifier">:digest</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">digest</span> }
+  <pre><span class="ruby-comment cmt"># File wikirobot.rb, line 146</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">upload</span>(<span class="ruby-identifier">file</span>, <span class="ruby-identifier">name</span>)
+    <span class="ruby-identifier">cx</span> = <span class="ruby-identifier">login</span>
+    <span class="ruby-identifier">$stderr</span>.<span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Uploading #{name} from #{file}&quot;</span>
+    <span class="ruby-identifier">result</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-constant">File</span>.<span class="ruby-identifier">open</span>(<span class="ruby-identifier">file</span>, <span class="ruby-value str">&quot;r&quot;</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">result</span> = <span class="ruby-identifier">cx</span>.<span class="ruby-identifier">edit</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">f</span>.<span class="ruby-identifier">read</span>(), <span class="ruby-identifier">:summary</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@options</span>[<span class="ruby-identifier">:wiki_comment</span>]) }
+    <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">result</span>
+    <span class="ruby-identifier">res</span> = <span class="ruby-identifier">result</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">elements</span>[<span class="ruby-value str">&quot;edit&quot;</span>]
+    <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-value str">'nochange'</span>]
+      []
+    <span class="ruby-keyword kw">else</span>
+      <span class="ruby-node">%w[oldrevid newrevid]</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">attributes</span>[<span class="ruby-identifier">e</span>].<span class="ruby-identifier">to_i</span> }
+    <span class="ruby-keyword kw">end</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

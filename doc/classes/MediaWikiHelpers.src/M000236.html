@@ -5,15 +5,16 @@
 
 <html>
 <head>
-  <title>hover (MediaWikiHelpers)</title>
+  <title>qs_object_type_link (MediaWikiHelpers)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 212</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">hover</span> <span class="ruby-identifier">label</span>, <span class="ruby-identifier">text</span>
-    <span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">text</span>, <span class="ruby-value str">&quot;&lt;span title=\&quot;&quot;</span>, <span class="ruby-node">&quot;\&quot; style=\&quot;border-bottom:1px dotted\&quot;&gt;#{label}&lt;/span&gt;&quot;</span>)
-    <span class="ruby-comment cmt">#wrap(text, &quot;{{H:title|#{label}|&quot;, &quot;}}&quot;)</span>
+  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 53</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">qs_object_type_link</span> <span class="ruby-identifier">type</span>, <span class="ruby-identifier">file_types</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-identifier">name</span> = <span class="ruby-identifier">type</span>.<span class="ruby-identifier">name</span>
+    <span class="ruby-identifier">internal_link</span>(<span class="ruby-identifier">url_for</span>(<span class="ruby-identifier">type</span>, <span class="ruby-keyword kw">nil</span>), <span class="ruby-identifier">name</span>) <span class="ruby-operator">+</span> (<span class="ruby-identifier">file_types</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">type</span>.<span class="ruby-identifier">files?</span> <span class="ruby-value">?
+</span>      <span class="ruby-identifier">hover</span>(<span class="ruby-value str">&quot; (types)&quot;</span>, <span class="ruby-identifier">wrap</span>(<span class="ruby-identifier">enum_with_sep</span>(<span class="ruby-identifier">file_types</span>, <span class="ruby-value str">' or '</span>), <span class="ruby-value str">' ('</span>, <span class="ruby-value str">')'</span>)) <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;&quot;</span>)
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

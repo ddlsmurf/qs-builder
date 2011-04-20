@@ -5,21 +5,19 @@
 
 <html>
 <head>
-  <title>require_one (App)</title>
+  <title>get_all (App)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 114</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">require_one</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>
-      <span class="ruby-identifier">reducer</span> = <span class="ruby-identifier">extension_point</span>(<span class="ruby-identifier">name</span>)[<span class="ruby-identifier">:mediator</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reducer</span>
-      <span class="ruby-identifier">result</span> = <span class="ruby-identifier">get_all</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>)
-      <span class="ruby-keyword kw">if</span> <span class="ruby-operator">!</span><span class="ruby-identifier">reducer</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;Error: no extension provides #{name.inspect}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">empty?</span>
-        <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;Error: more than one extension provides #{name.inspect}, but no reducer&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
-        <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">first</span>
+  <pre><span class="ruby-comment cmt"># File lib/app.rb, line 99</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_all</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>
+      <span class="ruby-identifier">result</span> = []
+      <span class="ruby-identifier">each_handler</span>(<span class="ruby-identifier">name</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">res</span> = <span class="ruby-identifier">e</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
+        <span class="ruby-identifier">result</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">res</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">res</span>.<span class="ruby-identifier">nil?</span>
       <span class="ruby-keyword kw">end</span>
-      <span class="ruby-identifier">raise</span> <span class="ruby-constant">RuntimeError</span>, <span class="ruby-node">&quot;Error: no extension provides #{name.inspect}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">result</span>.<span class="ruby-identifier">empty?</span>
+      <span class="ruby-identifier">result</span> = <span class="ruby-identifier">result</span>.<span class="ruby-identifier">reduce</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">reducer</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">reducer</span>
       <span class="ruby-identifier">result</span>
     <span class="ruby-keyword kw">end</span></pre>
 </body>

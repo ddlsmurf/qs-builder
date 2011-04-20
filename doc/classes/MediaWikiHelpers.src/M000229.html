@@ -5,16 +5,14 @@
 
 <html>
 <head>
-  <title>func_call (MediaWikiHelpers)</title>
+  <title>template_argument (MediaWikiHelpers)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 178</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">func_call</span> <span class="ruby-identifier">name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
-    <span class="ruby-identifier">args</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">to_s</span> }
-    <span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span> <span class="ruby-keyword kw">while</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;&quot;</span>
-    <span class="ruby-node">&quot;{{##{name}#{wrap(args.join(&quot; | &quot;), &quot;: &quot;, &quot;&quot;)}}}&quot;</span>
+  <pre><span class="ruby-comment cmt"># File basic/helpers/media_wiki_helpers.rb, line 15</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_argument</span> <span class="ruby-identifier">name</span>, <span class="ruby-identifier">default</span> = <span class="ruby-keyword kw">nil</span>
+    <span class="ruby-node">&quot;{{{#{name + (default.to_s.length &gt; 0 ? &quot;|&quot; + default.to_s : &quot;&quot;)}}}}&quot;</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

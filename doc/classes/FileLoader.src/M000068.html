@@ -5,14 +5,16 @@
 
 <html>
 <head>
-  <title>search_paths= (FileLoader)</title>
+  <title>new (FileLoader)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/file_loader.rb, line 25</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">search_paths=</span> <span class="ruby-identifier">new_paths</span>
-    <span class="ruby-ivar">@search_paths</span> = <span class="ruby-identifier">new_paths</span> <span class="ruby-value">? </span><span class="ruby-constant">Array</span>(<span class="ruby-identifier">new_paths</span>).<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">Pathname</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">e</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">e</span> } <span class="ruby-operator">:</span> []
+  <pre><span class="ruby-comment cmt"># File lib/file_loader.rb, line 20</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">search_paths</span>, <span class="ruby-identifier">file_readers</span> = {}
+    <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">search_paths</span> = <span class="ruby-identifier">search_paths</span>
+    <span class="ruby-ivar">@readers</span> = <span class="ruby-identifier">file_readers</span>
+    <span class="ruby-ivar">@file_cache</span> = {}
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>

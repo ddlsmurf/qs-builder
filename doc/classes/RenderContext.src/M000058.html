@@ -5,14 +5,15 @@
 
 <html>
 <head>
-  <title>root? (RenderContext)</title>
+  <title>new (RenderContext)</title>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
 </head>
 <body class="standalone-code">
-  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 39</span>
-  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">root?</span>
-    <span class="ruby-ivar">@parent</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">TemplateWriter</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@parent</span>
+  <pre><span class="ruby-comment cmt"># File lib/template_writer.rb, line 35</span>
+  <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-identifier">this</span>, <span class="ruby-identifier">parent</span>
+    <span class="ruby-ivar">@this</span> = <span class="ruby-identifier">this</span>
+    <span class="ruby-ivar">@parent</span> = <span class="ruby-identifier">parent</span>
   <span class="ruby-keyword kw">end</span></pre>
 </body>
 </html>
