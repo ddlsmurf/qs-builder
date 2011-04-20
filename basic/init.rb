@@ -1,5 +1,6 @@
 $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '.')))
 
+require "media_wiki"
 require 'helpers/media_wiki_helpers'
 
 class Hash
@@ -26,6 +27,9 @@ end
 
 class MediaContext < RenderContext
   include MediaWikiHelpers
+  def path *segments
+    segments.map { |e| MediaWiki::wiki_to_uri(e.to_s.gsub("*", "_STAR_").gsub(/[^a-z0-9_.-]/i, "_")) }.join "/"
+  end
 end
 
 App.register do
@@ -40,7 +44,7 @@ App.register do
     plugins_by_app = {}
     data[:bundles].each do |bundle|
       plugins[bundle.id] = bundle
-      run_erb_template "redirect", bundle, @root_context.make_path("Plugin", bundle.name) + ".txt", :destination => "home"
+      run_erb_template "redirect", bundle, @root_context.path("Plugin", bundle.name) + ".txt", :destination => "home"
       %w[tech preferences commands home].each do |sub_page|
         run_erb_template "plugin/#{sub_page}", bundle, @root_context.path_for(bundle, sub_page) + ".txt"
       end
@@ -48,7 +52,7 @@ App.register do
     end
     plugins_by_app.each_pair do |app_id, plugins_of_app|
       app = QS::Registry.get_app app_id
-      run_erb_template "redirect", app, @root_context.make_path("Bundle", app.name) + ".txt", :destination => "home"
+      run_erb_template "redirect", app, @root_context.path("Bundle", app.name) + ".txt", :destination => "home"
       run_erb_template "Bundle/home", app, @root_context.path_for(app, "home") + ".txt", :plugins => plugins_of_app
     end
     run_erb_template "ListOfKeys", data, "ListOfKeys.htm"

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 begin
-  %w[plist erb tilt pathname pp optparse shellwords yaml media_wiki].
+  %w[plist erb tilt pathname pp optparse shellwords yaml].
   each { |e| require e }
 rescue LoadError => e
   retry if require 'rubygems'
