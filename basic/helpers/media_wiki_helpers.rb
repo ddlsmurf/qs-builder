@@ -188,11 +188,11 @@ module MediaWikiHelpers
     if_exists override_name, include_template(override_name), if_exists(url, include_template(url))
   end
   def qs_object_link obj, type = nil
-    internal_link config.url_for(obj, type), obj.name
+    internal_link url_for(obj, type), obj.name
   end
   def qs_object_type_link type, file_types = nil
     name = type.name
-    internal_link(config.url_for(type, nil), name) + (type.files? ?
+    internal_link(url_for(type, nil), name) + (type.files? ?
       hover(" (types)", wrap(enum_with_sep(file_types, ' or '), ' (', ')')) || "" : "")
   end
   def html_links_to_wikimedia str
