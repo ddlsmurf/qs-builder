@@ -143,12 +143,17 @@ class App
       (@options[:wiki_prefix] ? " (using prefix #{@options[:wiki_prefix].inspect})" : "")
     @wm = mw
   end
-  def upload(file, name)
+  def upload(file, name, as_page)
     cx = login
     $stderr.puts "Uploading #{name} from #{file}"
     result = nil
-    File.open(file, "r") { |f| result = cx.edit(name, f.read(), :summary => @options[:wiki_comment]) }
-    return nil unless result
+    if as_page
+      File.open(file, "r") { |f| result = cx.edit(name, f.read(), :summary => @options[:wiki_comment]) }
+    else
+      result = cx.upload(file, :filename => name.gsub("/", "-"), :ignorewarnings => true, :comment => @options[:wiki_comment])
+      result = nil
+    end
+    return [] unless result
     res = result[0].elements["edit"]
     if res.attributes['nochange']
       []
@@ -172,16 +177,18 @@ class App
     (@tracker[server_name] ||= {}).merge!({:from => file[:from]})
     res = []
     unless !@options[:force] && @tracker[server_name][:digest] == file[:digest]
-      res = upload(file[:from], server_name)
-      if res.empty?
-        puts "  (no change)"
-      else
-        if @tracker[server_name][:prev]
-          if @tracker[server_name][:prev] != res[0]
-            puts "Warning: Overwrote externally edited page #{server_name}"
+      res = upload(file[:from], server_name, file[:page?])
+      if file[:page?]
+        if res.empty?
+          puts "  (no change)"
+        else
+          if @tracker[server_name][:prev]
+            if @tracker[server_name][:prev] != res[0]
+              puts "Warning: Overwrote externally edited page #{server_name}"
+            end
           end
+          @tracker[server_name][:prev] = res[1]
         end
-        @tracker[server_name][:prev] = res[1]
       end
     end  
     @tracker[server_name][:digest] = file[:digest]
