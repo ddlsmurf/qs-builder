@@ -54,7 +54,7 @@ class BundleLoader < FileLoader
   # Only kMDItemContentType s com.apple.application-bundle and searchs com.apple.systempreference.prefpane
   def find_with_mdutil id
     # You're not supposed to use Shellwords.shellescape in quotes... hope that's ok... Bundlenames shouldn't pose a problem, but a malicious plist...
-    raise "Must make find_with_mdutil safe before using it elsewhere" unless id =~ /^[a-z0-9\.-_]+$/
+    raise "Must make find_with_mdutil safe before using it elsewhere (Error loading #{id.inspect})" unless id =~ /^[a-z0-9\.-_]+$/
     results = `mdfind '(kMDItemContentType == "com.apple.application-bundle" || kMDItemContentType == "com.apple.systempreference.prefpane") && kMDItemCFBundleIdentifier == "#{Shellwords.shellescape(id)}"'`.split("\n")
     raise NoBundleFound, "Could not find application/prefpane with bundle id #{id} using mkfind" if results.empty?
     warn_duplicate_bundle id, results if results.count > 1
