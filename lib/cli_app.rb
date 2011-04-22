@@ -93,6 +93,7 @@ App.register do
       merged_config = App.require_one :config
       App.call_extension_point :startup, ARGV, merged_config
       App.call_extension_point :run, ARGV, merged_config
+      logger.cleanup_preview
     rescue CliLogger::ReraisedSilentException => e
       exit 1
     end
