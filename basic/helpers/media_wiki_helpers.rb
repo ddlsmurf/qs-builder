@@ -28,7 +28,7 @@ module MediaWikiHelpers
     args = args.map { |e| e.to_s }
     args.pop while args.last == ""
     args = args.join("\n| ")
-    "{{#{name}#{args.length == 0 ? "" : "| #{args}"}}}"
+    "{{#{name}#{args.length == 0 ? "" : "|#{args}"}}}"
   end
   # Include specified URL from the global namespace
   def include_template url, *args
