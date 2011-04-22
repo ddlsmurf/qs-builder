@@ -12,7 +12,7 @@ App.register do
   IMAGE_FORMATS = {
     :tiny => 18,
     :icon => 32,
-    :large => 256
+    :large => 128
   }
   def convert_image input, output, resize = nil
     output = File.expand_path(output)
