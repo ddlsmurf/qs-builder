@@ -50,9 +50,15 @@ module MediaWikiHelpers
     override_name = "#{url}_Manual"
     if_exists override_name, include_template(override_name), if_exists(url, include_template(url), content_if_neither_exists)
   end
+  # Builds a call a template finding an icon for the QS::QSObject
+  def qs_object_icon obj, type = nil
+    objurl = [url_for(obj, nil)]
+    objurl << type if type
+    include_template(url("QSIcon"), *objurl)
+  end
   # Builds an internal link to the provided QS::QSObject
   def qs_object_link obj, type = nil
-    internal_link url_for(obj, type), obj.name
+    qs_object_icon(obj) + internal_link(url_for(obj, type), obj.name)
   end
   # Builds an internal link to the specified QS::ObjectType
   # [type] QS::ObjectType to link to
