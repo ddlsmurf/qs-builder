@@ -50,7 +50,7 @@ class FolderScanner
         is_file = File.file? file_path
         is_folder = File.directory? file_path
         if is_file || is_folder
-          should_include = include? file_name, is_file
+          should_include = include?(file_name, is_file)
           yield file_path, relative_path, file_name, should_include, is_file if block_given?
           if is_folder
             should_include = visitor.enter_folder(file_name, !(would_recurse && should_include)) if visitor
