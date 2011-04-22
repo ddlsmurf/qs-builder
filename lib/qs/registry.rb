@@ -35,12 +35,12 @@ module QS
           table_name = object[:kind]
           table = (@@objects_by_kind[table_name] ||= {})
         end
-        previous = table[id]
+        previous = table[id.downcase]
         if previous
-          log_collision id, table_name, object, previous
+          log_collision id.downcase, table_name, object, previous
           @@logger.warn "Duplicate #{table_name || "objects"} with ID #{id.inspect}:", object.inspect, previous.inspect
         else
-          table[id] = object
+          table[id.downcase] = object
         end
       end
       # All the types of registrations known to the registry
@@ -53,7 +53,7 @@ module QS
       end
       # Return an ObjectType for the specified type
       def get_type id
-        @@externals[:types][id] ||= ObjectType.new({}, id, get_app)
+        @@externals[:types][id.downcase] ||= ObjectType.new({}, id, get_app)
       end
       # Return a Bundle for the specified id, or raises if not found
       def get_app id = QS::BUNDLE_ID
@@ -71,7 +71,7 @@ module QS
       def load_plugins bundles, qs_app, &bundle_loader # :yields: blundle_id_to_load
         raise "QSApp has wrong bundle id" unless qs_app.id == QS::BUNDLE_ID
         @@bundle_loader = bundle_loader
-        (@@externals[:apps] ||= {})[qs_app.id] = qs_app
+        (@@externals[:apps] ||= {})[qs_app.id.downcase] = qs_app
         @@externals[:types] ||= {}
         result = bundles.map { |bundle| QS::Plugin.new bundle, qs_app }
         Registration.registrations_of(qs_app).each { |r| register r }

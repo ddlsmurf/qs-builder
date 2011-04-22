@@ -45,7 +45,7 @@ App.register do
     plugins = {}
     plugins_by_app = {}
     data[:bundles].each do |bundle|
-      plugins[bundle.id] = bundle
+      plugins[bundle.id.downcase] = bundle
       run_erb_template "redirect", bundle, @root_context.path("Plugin", bundle.name) + ".txt", :destination => "home"
       %w[tech preferences commands home].each do |sub_page|
         run_erb_template "plugin/#{sub_page}", bundle, @root_context.path_for(bundle, sub_page) + ".txt"
