@@ -25,6 +25,7 @@ BUNDLE_RESOURCES_TO_MERGE = %w[ResourceLocations.plist QSKindDescriptions.plist 
   QSAction.name.strings QSAction.commandFormat.strings QSAction.description.strings
 QSObjectSource.name.strings QSCatalogPreset.name.strings]
 LANGUAGE_ALIASES = { 'en' => 'English', 'es' => 'Spanish', 'it' => 'Italian', 'de' => 'German', 'fr' => 'French'}
+TEMPLATE_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
 DEFAULTS = {
   :plugin_paths => ['~/Library/Application Support/Quicksilver/PlugIns',
   '/Applications/Quicksilver.app/Contents/PlugIns/'],
@@ -226,8 +227,9 @@ App.register do # Template loader
     @logger = App.require_one(:logger)
     global_options[:templates].uniq.each do |template|
       @logger.info "Loading template", template.inspect do
-        unless App.load_extensions template
-          raise ArgumentError, "Could not find template #{template.inspect}"
+        template_path = (Pathname.new(TEMPLATE_PATH) + template).to_s
+        unless App.load_extensions template_path
+          raise ArgumentError, "Could not find template #{template.inspect} (#{template_path})"
         end
       end
     end
