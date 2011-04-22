@@ -1,0 +1,13 @@
+<%
+options = {}
+options[:name] = this.name
+options[:id] = this.id
+options[:url] = url(this)
+options[:flags] = []
+%w[secret hidden].each { |f| options[:flags] << f if this[f]}
+options.delete(:flags) if options[:flags].empty?
+options[:author] = this['author'] if this['author']
+options[:copyright] = this['NSHumanReadableCopyright'] if this['NSHumanReadableCopyright']
+options[:homepage] = this['homepage'] if this['homepage']
+options[:description] = html_links_to_wikimedia(this['description'] || this['extendedDescription'])
+ %><%= include_template(url("PluginSidebar"), options) %>

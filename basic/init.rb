@@ -47,7 +47,7 @@ App.register do
     data[:bundles].each do |bundle|
       plugins[bundle.id.downcase] = bundle
       run_erb_template "redirect", bundle, @root_context.path("Plugin", bundle.name) + ".txt", :destination => "home"
-      %w[tech preferences commands home].each do |sub_page|
+      %w[tech preferences commands home sidebar].each do |sub_page|
         run_erb_template "plugin/#{sub_page}", bundle, @root_context.path_for(bundle, sub_page) + ".txt"
       end
       bundle.related_bundle_ids.each { |id| (plugins_by_app[id] ||= []) << bundle }
@@ -63,6 +63,7 @@ App.register do
     run_erb_template "ListOfRegistrations", data, "ListOfRegistrations.txt"
     run_erb_template "ListOfMediators", data, "ListOfMediators.txt"
     run_erb_template "ListOfPlugins", plugins, "ListOfPlugins.txt"
+    run_erb_template "PluginSidebar", plugins, "PluginSidebar.txt"
     if data[:config][:wiki_prefix]
       @logger.info "Dont forget to use the prefix #{data[:config][:wiki_prefix].inspect} when uploading!"
     else
