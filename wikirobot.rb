@@ -22,12 +22,15 @@ module MediaWiki
     end
     def page_rev_ids(page_titles)
       server_info = {}
-      page_titles.each_slice(500) do |titles|
+      page_titles.each_slice(50) do |titles|
         form_data = {'action' => 'query', 'prop' => 'info', 'titles' => titles.join("|")}
         pages = make_api_request(form_data)
+        normalised_title_list = pages.first.elements["query/normalized"]
         normalized = {}
-        norm = pages.first.elements["query/normalized"].each do |n|
-          normalized[n.attributes['to']] = n.attributes['from']
+        if normalised_title_list
+          norm = normalised_title_list.each do |n|
+            normalized[n.attributes['to']] = n.attributes['from']
+          end
         end
         pages.first.elements["query/pages"].each do |page|
           if valid_page? page
@@ -242,7 +245,9 @@ class App
       end
       exit 1 if would_overwrite && !@options[:force]
     end
-    files.each_pair { |name, val| process_file(val) }
+    files.sort.each do |name, val|
+      process_file(val)
+    end
     File.open(@options[:tracker], "w") { |file| YAML.dump(@tracker, file) }
   end
 end
