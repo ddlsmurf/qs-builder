@@ -245,10 +245,13 @@ class App
       end
       exit 1 if would_overwrite && !@options[:force]
     end
-    files.sort.each do |name, val|
-      process_file(val)
+    begin
+      files.sort.each do |name, val|
+        process_file(val)
+      end
+    ensure
+      File.open(@options[:tracker], "w") { |file| YAML.dump(@tracker, file) } if @options[:tracker]
     end
-    File.open(@options[:tracker], "w") { |file| YAML.dump(@tracker, file) }
   end
 end
 App.new.run
