@@ -48,11 +48,9 @@ class CliLogger
     nil
   end
   def indent message, level, *arguments
-    #puts "Indenting at\n\t#{caller().join"\n\t"}"
     @indents << [[message, level, @indents.size, arguments]]
   end
   def unindent_at minimum_level = @minimum
-    #puts "Unindenting at #{minimum_level}\n\t#{caller().join"\n\t"}"
     popped_indent = @indents.pop
     parent_indent = @indents.last
     minimum_level = LEVELS.index(minimum_level) if minimum_level.is_a?(Symbol)
@@ -73,6 +71,7 @@ class CliLogger
     begin
       res = yield
     rescue ReraisedSilentException => r
+      unindent_at(@minimum_when_failed || @minimum)
       raise
     rescue Exception => e
       log_exception(nil, e)
