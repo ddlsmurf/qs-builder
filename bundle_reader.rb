@@ -158,7 +158,7 @@ App.register do # Loads the bundles with a PluginLoader
       #mdfind '(kMDItemContentType == "com.apple.application-bundle" || kMDItemContentType == "com.apple.systempreference.prefpane") && kMDItemCFBundleIdentifier == "com.apple.airport.adminutility"'
       return bundle_loader.find_bundle_by_id id
     rescue Exception => e
-      @logger.warn "Application/PrefPane #{id} not found, faking it"
+      @logger.info "Application/PrefPane #{id} not found, faking it"
       bundle = make_fake_app_bundle id
     end
     bundle

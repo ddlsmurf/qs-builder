@@ -345,6 +345,10 @@ module QS
       end  
       super info, id, parent
     end
+    def self.resources_of_qs qs_app
+      table = qs_app.localisation_table("ResourceLocations") || {}
+      table.map { |res, val| Resource.new(val, res, qs_app) }
+    end
   end
   # Root QSObject for a plugin, reads
   # the root of the plist falling back on its QSPlugin key if the key isn't found.

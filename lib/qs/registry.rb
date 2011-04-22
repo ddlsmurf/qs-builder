@@ -57,7 +57,7 @@ module QS
       end
       # Return a Bundle for the specified id, or raises if not found
       def get_app id = QS::BUNDLE_ID
-        @@externals[:apps][id] or raise "No app #{id} loaded !"
+        (@@externals[:apps] ||= {})[id] ||= @@bundle_loader.call(id)
       end
       # Returns the global id hash
       def objects
@@ -70,10 +70,12 @@ module QS
       # [qs_app] Bundle of Quicksilver.app
       def load_plugins bundles, qs_app, &bundle_loader # :yields: blundle_id_to_load
         raise "QSApp has wrong bundle id" unless qs_app.id == QS::BUNDLE_ID
+        @@bundle_loader = bundle_loader
         (@@externals[:apps] ||= {})[qs_app.id] = qs_app
         @@externals[:types] ||= {}
         result = bundles.map { |bundle| QS::Plugin.new bundle, qs_app }
         Registration.registrations_of(qs_app).each { |r| register r }
+        Resource.resources_of_qs(qs_app).each { |r| register r }
         result.map { |p| p.related_bundle_ids }.flatten.each do |id|
           (@@externals[:apps] ||= {})[id] = yield id
         end

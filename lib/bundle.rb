@@ -19,6 +19,9 @@ class Bundle
   def name
     self['CFBundleName'] || @file_name || id
   end
+  def icon_name
+    self['CFBundleIconFile'] || "Icon.icns"
+  end
   # Return an array of all resources in this bundle
   # 
   # [attempted_extensions] Optional list of possible extensions for the resource name
