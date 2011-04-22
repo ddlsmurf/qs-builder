@@ -115,7 +115,7 @@ module MediaWikiTableHelpers
         if running_since < last_index
           row = @buffered_rows[running_since]
           span = {:rowspan => (last_index - running_since + 1).to_s}
-          if row.length == 3
+          if row[c].length == 3
             row[c] << span
           else
             row[c][3].merge!(span)
