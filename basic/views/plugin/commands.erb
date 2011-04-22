@@ -51,19 +51,27 @@
     r = a[:pane1].downcase <=> b[:pane1].downcase
     r.zero? ? a[:pane2].downcase <=> b[:pane2].downcase : r
   end
+  column_titles = {
+    :pane1  => "Pane 1",
+    :pane2 => "Pane 2",
+    :pane3 => "Pane 3",
+    :reqs => "Extra Requirements",
+    :notes => "Notes"
+  }
+  cols = %w[pane1 pane2 pane3].map(&:to_sym)
+  %w[reqs notes].map(&:to_sym).each { |c| cols << c if rows.any? { |r| r[c].to_s.length > 0 } }
  %>
 
 <% if rows.count > 0 %>
 ==Commands==
 To execute [[Commands]]: select the Objects and Actions for each pane in Quicksilver, and press enter. Items exclusive to the plugin are in bold. Items in brackets are additional instructions for when typing in the panes.
 <%= make_table(:auto_rowspan => true) do
-  cols = %w[pane1 pane2 pane3 reqs notes].map(&:to_sym)
   template_row = { :style_for => {} }
   cols.each do |c|
     template_row[c] = ""
     column c
   end
-  header_row ["Pane 1", "Pane 2", "Pane 3", "Extra Requirements", "Notes"]
+  header_row cols.map { |c| column_titles[c] }
   rows.each do |r|
     r = template_row.merge(r)
     if emph = r.delete(:emphasis)
