@@ -6,6 +6,8 @@ each { |e| require e }
 
 # Helper class for locating and loading a bundle and it's info.plist
 class BundleLoader < FileLoader
+  class NoBundleFound < StandardError
+  end
   def initialize search_paths, readers
     super search_paths, readers
     @bundles = {}
@@ -44,7 +46,7 @@ class BundleLoader < FileLoader
       end
     end
     warn_duplicate_bundle(results.first, duplicates) if warn_of_duplicate_files and !duplicates.empty?
-    raise "No bundle found with pattern #{path_pattern.inspect}. Searched:\n\t- #{attempts.join "\n\t- "}" if results.empty?
+    raise NoBundleFound, "No bundle found with pattern #{path_pattern.inspect}. Searched:\n\t- #{attempts.join "\n\t- "}" if results.empty?
     results
   end
   # Locate a bundle by its ID using spotlight
@@ -54,7 +56,7 @@ class BundleLoader < FileLoader
     # You're not supposed to use Shellwords.shellescape in quotes... hope that's ok... Bundlenames shouldn't pose a problem, but a malicious plist...
     raise "Must make find_with_mdutil safe before using it elsewhere" unless id =~ /^[a-z0-9\.-_]+$/
     results = `mdfind '(kMDItemContentType == "com.apple.application-bundle" || kMDItemContentType == "com.apple.systempreference.prefpane") && kMDItemCFBundleIdentifier == "#{Shellwords.shellescape(id)}"'`.split("\n")
-    raise "Could not find application/prefpane with bundle id #{id} using mkfind" if results.empty?
+    raise NoBundleFound, "Could not find application/prefpane with bundle id #{id} using mkfind" if results.empty?
     warn_duplicate_bundle id, results if results.count > 1
     results[0]
   end
