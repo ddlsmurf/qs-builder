@@ -46,3 +46,26 @@
       # qs.shellcommand: qs.shellcommand
       # qs.tag.file: qs.tag.file
       # qs.ui.element: qs.ui.element
+  ResourceLocations.plist:
+    :current:
+      ToolbarAppsFolderIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarAppsFolderIcon.icns
+      GenericApplicationIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericApplicationIcon.icns
+      HomeFolderIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/HomeFolderIcon.icns
+      InternetLocationVNC: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/InternetLocationVNC.icns
+      GenericFolderIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns
+      InternetLocationFTP: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/InternetLocationFTP.icns
+      GenericDocumentIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericDocumentIcon.icns
+      ToolbarCustomizeIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarCustomizeIcon.icns
+      TrashIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/TrashIcon.icns
+      ClippingText: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ClippingText.icns
+      DeveloperFolderIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/DeveloperFolderIcon.icns
+      ExecutableBinaryIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ExecutableBinaryIcon.icns
+      BookmarkIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/BookmarkIcon.icns
+      GenericNetworkIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericNetworkIcon.icns
+      UserIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/UserIcon.icns
+      GenericFileServerIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFileServerIcon.icns
+      Mouse: /System/Library/PreferencePanes/Mouse.prefPane/Contents/Resources/Mouse.icns
+      NSComputer: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/iMac.icns
+      Computer: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/iMac.icns
+      iMac: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/iMac.icns
+      ToolbarFavoritesIcon: /System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarFavoritesIcon.icns
