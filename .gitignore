@@ -61,3 +61,4 @@ obj/
 *.log
 *.def
 doc/
+data/
