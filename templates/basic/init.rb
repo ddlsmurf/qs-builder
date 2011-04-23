@@ -1,5 +1,3 @@
-$:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '.')))
-
 require "media_wiki"
 require 'helpers/media_wiki_helpers'
 require "helpers/media_wiki_table_helpers"

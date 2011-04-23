@@ -122,19 +122,25 @@ class App
       raise RuntimeError, "Error: no extension provides #{name.inspect}" if result.nil? || result.empty?
       result
     end
-    # Requires the file path/init.rb if it exists
+    # Requires the file path/init.rb or path.rb if it exists
     # 
     # Calling the extension points :extension_will_load and
     # :extension_did_load respectively before and after.
     def load_extensions path
-      anything = false
+      result = false
       extension_path = (Pathname.new(path) + 'init.rb').expand_path
+      multifile = true
+      unless extension_path.file?
+        multifile = false
+        extension_path = Pathname.new(path =~ /\.rb$/i ? path : path + ".rb").expand_path
+      end
       if extension_path.file?
         call_extension_point :extension_will_load, extension_path
         loader_list_backup = $:.dup
         begin
+          $:.unshift(extension_path.dirname.expand_path)
           if require extension_path.to_s.gsub(/.rb$/i, "")
-            anything = true
+            result = true
             call_extension_point :extension_did_load, extension_path
           end
         ensure
@@ -142,7 +148,7 @@ class App
           $:.clear.unshift(*loader_list_backup)
         end
       end
-      anything
+      result
     end
   end
   clear_extensions
