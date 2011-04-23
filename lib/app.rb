@@ -131,9 +131,15 @@ class App
       extension_path = (Pathname.new(path) + 'init.rb').expand_path
       if extension_path.file?
         call_extension_point :extension_will_load, extension_path
-        if require extension_path.to_s.gsub(/.rb$/i, "")
-          anything = true
-          call_extension_point :extension_did_load, extension_path
+        loader_list_backup = $:.dup
+        begin
+          if require extension_path.to_s.gsub(/.rb$/i, "")
+            anything = true
+            call_extension_point :extension_did_load, extension_path
+          end
+        ensure
+          # this can cause problems with autoload
+          $:.clear.unshift(*loader_list_backup)
         end
       end
       anything
