@@ -26,6 +26,7 @@ BUNDLE_RESOURCES_TO_MERGE = %w[ResourceLocations.plist QSKindDescriptions.plist 
 QSObjectSource.name.strings QSCatalogPreset.name.strings]
 LANGUAGE_ALIASES = { 'en' => 'English', 'es' => 'Spanish', 'it' => 'Italian', 'de' => 'German', 'fr' => 'French'}
 TEMPLATE_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'templates'))
+MODULES_TO_LOAD = %w[sort_yaml_hashes]
 DEFAULTS = {
   :plugin_paths => ['~/Library/Application Support/Quicksilver/PlugIns',
   '/Applications/Quicksilver.app/Contents/PlugIns/'],
@@ -99,6 +100,9 @@ App.register do # Support for YAML and PList formats
 end
 
 App.register do # Main application, load bundles, feed to templates
+  def startup arguments, global_options
+    MODULES_TO_LOAD.each { |name| App.load_extensions "modules/#{name}" }
+  end
   def run arguments, global_options
     logger = App.require_one(:logger)
     logger.debug "Startup - Loading Bundles", :bundles_to_load => arguments, :config => global_options
