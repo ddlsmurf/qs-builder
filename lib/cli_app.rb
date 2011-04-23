@@ -55,9 +55,9 @@ App.register do
   def parse_options opts, global_config
     opts.on_tail("General options")
 
-    opts.on_tail("-m", "--module PATH", "Load specified module (in PATH/init.rb). NB: modules may add parameters not otherwise visible in --help.") do |v|
-      unless App.load_extensions v
-        raise ArgumentError, "Could not find module #{v.inspect}"
+    opts.on_tail("-m", "--module PATH", "Load specified module (in #{@module_path}/PATH.rb). NB: modules may add parameters not otherwise visible in --help.") do |v|
+      unless App.load_extensions((@module_path + v).to_s)
+        raise ArgumentError, "Could not find module #{(@module_path + v).to_s.inspect}"
       end
     end
     opts.on_tail("-v", "--[no-]verbose", "Run verbosely") do |v|
@@ -72,6 +72,7 @@ App.register do
   def main
     show_help = false
     @config ||= {}
+    @module_path = (Pathname.new($0).dirname + "modules")
     args = OptionParser.new
     App.call_extension_point :parse_options, args, @config
     args.on_tail("-h", "--help", "Show this help message") do
