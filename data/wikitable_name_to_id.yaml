@@ -1,0 +1,48 @@
+--- 
+# IconGrabber: could_not_find_bundle_id
+# Fumo Interface: could_not_find_bundle_id
+# Remember The Milk: could_not_find_bundle_id
+# Showcase Interface: could_not_find_bundle_id
+# SilverFlow Interface: could_not_find_bundle_id
+# Things Plugin: could_not_find_bundle_id
+# BezelPro: could_not_find_bundle_id
+1Password Module: com.robertson.Quicksilver.OnePassword
+BezelHUD: com.blacktree.Quicksilver.BezelHUD
+DeMinimizer Module: com.blacktree.Quicksilver.YTDeMinPlugIn
+Mini-Bezel: com.blacktree.Quicksilver.Mini_Bezel
+OpenMeta File Tagging: com.blacktree.Quicksilver.OpenMetaFileTagging
+QR Code Module: com.ssofts.Quicksilver.QSQRCode
+Remote Hosts Module: com.skurfer.Quicksilver.RemoteHosts
+Tatau Module: com.blacktree.Quicksilver.YTTatauPlugIn
+Viscosity Module: com.skurfer.Quicksilver.QSViscosity
+iUseThis Plugin: com.blacktree.Quicksilver.QSIusethis
+Abracadabra Module: com.blacktree.Quicksilver.QSGestureTriggers
+AcidSearch: com.blacktree.Quicksilver.QSAcidSearchPlugIn
+Airport Module: com.blacktree.Quicksilver.QSAirPortPlugIn
+"Constellation Menus (\xCE\xB2)": com.blacktree.Quicksilver.QSRadialMenuPlugIn
+Cyberduck: com.blacktree.Quicksilver.Cyberduck
+Define with dict.org: com.blacktree.Quicksilver.DictPlugin
+Desktop Picture Action: com.blacktree.Quicksilver.TKDesktopPlugin
+Developer  Module: com.blacktree.Quicksilver.QSDeveloperPlugIn
+Deviant  Module: com.blacktree.Quicksilver.QSDeviantModule
+"Eclipse (\xC3\x9F)": com.bradreynolds.Quicksilver.QSEclipse
+Entourage 2004 Module: com.blacktree.Quicksilver.QSEntouragePlugIn
+File Attribute Actions: com.blacktree.Quicksilver.QSFileAttributesPlugIn
+File Compression Module: com.blacktree.Quicksilver.QSCompressionPlugIn
+Hotkey Triggers: com.blacktree.Quicksilver.QSHotKeyTriggerPlugIn
+Keychain module: com.blacktree.Quicksilver.QSKeychainPlugIn
+"NetNewsWire Module (\xC3\x9F)": com.blacktree.Quicksilver.QSNNWPlugIn
+Notification Hub: com.blacktree.Quicksilver.NotificationHub
+Omniweb Module: com.blacktree.Quicksilver.QSOmniWebPlugIn
+Opera Module: com.blacktree.Quicksilver.QSOpera
+"Phone Actions (\xC3\x9F)": com.blacktree.Quicksilver.QSPhoneActionsPlugIn
+Process manipulation Actions: com.blacktree.Quicksilver.QSProcessManipulationPlugIn
+QS Core: com.blacktree.Quicksilver.QSCorePlugIn
+Salling Clicker: com.awatkins.Quicksilver.Clicker
+"Screen Capture Actions (\xC3\x9F)": com.blacktree.Quicksilver.QSScreenCapturePlugIn
+Service Menu Module: com.blacktree.Quicksilver.QSServicesMenuPlugIn
+Social Bookmarks: com.blacktree.Quicksilver.QSDeliciousPlugIn
+System Hotkey Commands: com.blacktree.Quicksilver.QSSymbolicHotKeyPlugIn
+"Teleflip Module (\xC3\x9F)": com.blacktree.Quicksilver.QSTeleflipPlugIn
+Transmit 3 Module: com.blacktree.Quicksilver.QSTransmitModule
+User Account Module: com.blacktree.Quicksilver.QSAccountsModule
