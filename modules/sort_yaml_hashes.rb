@@ -19,5 +19,3 @@ class Hash
     end
   end
 end
-
-puts "Sorted!"

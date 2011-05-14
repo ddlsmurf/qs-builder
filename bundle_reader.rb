@@ -144,7 +144,7 @@ App.register do # Loads the bundles with a PluginLoader
       end
     end
     raise ArgumentError, "No languages specified" if global_options[:languages].to_s == ""
-    global_options[:languages] = global_options[:languages].map { |l| [l] + Array(LANGUAGE_ALIASES[l.downcase]) }.flatten
+    global_options[:languages] = global_options[:languages].map { |l| [l] + Array(LANGUAGE_ALIASES[l.downcase]) }.flatten.uniq
     raise ArgumentError, "No plugin name to load. If you really want to load all, specify '*'." if arguments.count == 0
   end
   def template_data
@@ -160,7 +160,6 @@ App.register do # Loads the bundles with a PluginLoader
   def load_external_app bundle_loader, id
     begin
       @logger.info "Loading application #{id.inspect}"
-      #mdfind '(kMDItemContentType == "com.apple.application-bundle" || kMDItemContentType == "com.apple.systempreference.prefpane") && kMDItemCFBundleIdentifier == "com.apple.airport.adminutility"'
       return bundle_loader.find_bundle_by_id id
     rescue BundleLoader::NoBundleFound => e
       @logger.info "Application/PrefPane #{id} not found, faking it"
