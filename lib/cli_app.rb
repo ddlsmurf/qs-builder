@@ -60,6 +60,25 @@ App.register do
         raise ArgumentError, "Could not find module #{(@module_path + v).to_s.inspect}"
       end
     end
+    opts.on_tail("--read-config FILENAME", "Load specified configuration file (yaml)") do |v|
+      logger.debug "Reading configuration file #{v}" do
+        new_config = File.open(v) { |file| YAML.load(file) }
+        modules = new_config.delete(:modules)
+        Array(modules).each do |module_name|
+          unless App.load_extensions((@module_path + module_name).to_s)
+            raise ArgumentError, "Could not find module #{(@module_path + module_name).to_s.inspect}"
+          end
+        end
+        @config.merge!(new_config, &@@config_merge_policy)
+      end
+    end
+    opts.on_tail("--write-config FILENAME", "Write configuration to file (yaml, after normal execution)") do |v|
+      @config[:write_config] = v
+    end
+    opts.on_tail("-d", "--[no-]debug", "Output debug information") do |v|
+      logger.minimum = :debug if v
+      @config[:debug] = v
+    end
     opts.on_tail("-v", "--[no-]verbose", "Run verbosely") do |v|
       logger.minimum = v ? :info : :warn
       @config[:verbose] = v
@@ -81,6 +100,8 @@ App.register do
     begin
       args.parse!
       App.call_extension_point :validate_options, ARGV, @config
+    rescue CliLogger::ReraisedSilentException => se
+      exit 1
     rescue Exception => e
       logger.error("Problem parsing command line arguments: #{e}") unless e.is_a?(SystemExit)
       $stderr.puts(args)
@@ -94,6 +115,11 @@ App.register do
       merged_config = App.require_one :config
       App.call_extension_point :startup, ARGV, merged_config
       App.call_extension_point :run, ARGV, merged_config
+      File.open(@config[:write_config], "w") do |file|
+        config_to_write = merged_config.dup
+        config_to_write.delete(:write_config)
+        YAML.dump(config_to_write, file)
+      end if @config[:write_config]
       logger.cleanup_preview
     rescue CliLogger::ReraisedSilentException => e
       exit 1
