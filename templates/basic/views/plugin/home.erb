@@ -18,7 +18,7 @@
 
 <% this['Tutorials'].each do |tut| %>
 *<%= tut['title']%>
-:<%=external_link(tut['link'])%><%=youtube(tut['youtube'])%><%=tut['description']%>
+:<%=external_link(tut['link'])%><%=internal_link(tut['wikilink'])%><%=youtube(tut['youtube'])%><%=tut['description']%>
 <%end%><%end%>
 
 <%= overiddable_template(url_for(this, "commands")) %>
