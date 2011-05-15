@@ -1,11 +1,18 @@
 --- 
-# IconGrabber: could_not_find_bundle_id
-# Fumo Interface: could_not_find_bundle_id
-# Remember The Milk: could_not_find_bundle_id
-# Showcase Interface: could_not_find_bundle_id
-# SilverFlow Interface: could_not_find_bundle_id
-# Things Plugin: could_not_find_bundle_id
-# BezelPro: could_not_find_bundle_id
+# http://lipidity.com/plugins/quicksilver/icongrabber/
+IconGrabber: com.blacktree.Quicksilver.IconGrabber
+# http://lipidity.com/plugins/quicksilver/fumo/
+Fumo Interface: com.blacktree.Quicksilver.QSFumoInterface
+# http://www.binaryminded.com/qsrtm.html
+Remember The Milk: com.binaryminded.QSRememberTheMilk
+# http://www.julius-eckert.com/project/view/2/3
+Showcase Interface: com.blacktree.Quicksilver.Showcase
+# http://www.julius-eckert.com/project/view/2/3
+SilverFlow Interface: com.blacktree.Quicksilver.SilverFlow
+# http://culturedcode.com/things/wiki/index.php/Things_plug-in_for_Quicksilver
+Things Plugin: com.culturedcode.thingsquicksilverplugin
+# http://lipidity.com/plugins/quicksilver/bezel-pro/
+BezelPro: com.blacktree.Quicksilver.BezelPro
 1Password Module: com.robertson.Quicksilver.OnePassword
 BezelHUD: com.blacktree.Quicksilver.BezelHUD
 DeMinimizer Module: com.blacktree.Quicksilver.YTDeMinPlugIn
