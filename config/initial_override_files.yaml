@@ -1,0 +1,15 @@
+--- 
+:read_config:
+- _versions.config.yaml
+- _paths.config.yaml
+:modules:
+- qsapp_source
+:templates: 
+#- basic
+#- icon-maker
+#- plist
+#- packager
+- default-override
+:argv:
+- '*'
+:output: out/initial-overrides

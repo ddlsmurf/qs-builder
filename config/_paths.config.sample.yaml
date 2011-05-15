@@ -1,0 +1,9 @@
+# Paths are relative to working directory,
+# except :read_config: which is relative to current config file
+---
+:override_paths: 
+- overrides/
+:plist: plugins.plist
+:plugin_paths: 
+- ./plugins
+:wiki_prefix: Auto/
