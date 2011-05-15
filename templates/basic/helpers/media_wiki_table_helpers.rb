@@ -128,21 +128,24 @@ module MediaWikiTableHelpers
     def add_row cells, header
       args = Array(@col_count.times.map do |i|
         cells[i] ? [header, i] + Array(cells[i]) : nil
-      end)
+      end.select { |c| c })
+        #raise "#{data.inspect}\n\n#{res.inspect}" if res.any? { |r| r.count != 2 }
       if @buffered_rows
         handle_row_spans args
       else
         write_row args
       end
+      nil
     end
     protected :add_row
     def get_cells data
       styles = data[:style_for] || {}
-      @col_ids.map do |id|
+      res = Array(@col_ids.map do |id|
         value = data[id]
         value = [value, styles[id] || {}]
         value
-      end
+      end)
+      res
     end
     protected :get_cells
     # Same as #row but with header cells
