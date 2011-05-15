@@ -71,14 +71,40 @@ module QS
   #   for type :path the key :path is a string, same for :version
   #   for type :feature the key :feature is a number
   class Requirement < QSObject
-    REQUIREMENT_TYPES = [:bundle, :framework, :path, :qs_version, :feature, :plugin ]
+    REQUIREMENT_TYPES = [:bundle, :framework, :path, :qs_min, :qs_max, :os_min, :os_max, :feature, :plugin ]
     attr_accessor :type, :value
     def initialize type, info, parent
       super info, nil, parent
       @type = type
     end
+    def self.version plugin, version, req = :qs_min
+      Requirement.new(req, {:version => version}, plugin)
+    end
+    def to_qsrequirement_entry
+      case type
+      when :bundle, :plugin
+        { @type.to_s => @info}
+      when :framework
+        { @type.to_s => { id => self['resource'] } }
+      when :path
+        { @type.to_s => self[:path] }
+      when :qs_min, :qs_max, :osx_min, :osx_max
+        { @type.to_s => self[:version] }
+      when :feature
+        { @type.to_s => self[:feature] }
+      else
+        {
+          @type => @info
+        }
+      end
+    end
     def self.requirements_of plugin
       result = []
+      plug = plugin['QSPlugin']
+      if plug
+        result << Requirement.version(plugin, plug['qsversion'], :qs_min) if plug['qsversion']
+        result << Requirement.version(plugin, plug['version'], :qs_min) if plug['version']
+      end
       reqs = plugin['QSRequirements']
       plugin.report_error "Expected a dict at 'QSRequirements' (got a #{reqs.class.name})" if reqs && !reqs.is_a?(Hash)
       return [] unless reqs.is_a?(Hash)
@@ -110,7 +136,13 @@ module QS
           end
         when "version"
           if val.is_a?(String)
-            result << Requirement.new(:qs_version, {:version => val}, plugin)
+            result << Requirement.version(plugin, val, :qs_min)
+          else
+            plugin.report_error "Expected a string at #{"QSRequirements/#{name}".inspect}"
+          end
+        when "qs_min", "qs_max", "os_min", "os_max"
+          if val.is_a?(String)
+            result << Requirement.version(plugin, val, name.to_sym)
           else
             plugin.report_error "Expected a string at #{"QSRequirements/#{name}".inspect}"
           end
@@ -143,8 +175,14 @@ module QS
         "Framework '#{id}' in #{self['resource']}"
       when :path
         "Path at #{self[:path].inspect} must exist"
-      when :qs_version
+      when :qs_min
         "Quicksilver build later than #{self[:version]}"
+      when :qs_max
+        "Quicksilver build earlier than #{self[:version]}"
+      when :osx_min
+        "Mac OS X later than #{self[:version]}"
+      when :osx_max
+        "Mac OS X earlier than #{self[:version]}"
       when :feature
         "Quicksilver feature level greater than #{self[:feature]}"
       when :plugin

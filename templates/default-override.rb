@@ -28,7 +28,7 @@ App.register do
     result
   end
   def run_template data
-    include_key_in_plist = %w[CFBundleIdentifier QSModifiedDate CFBundleName CFBundleVersion QSPlugIn QSRequirements CFBundleShortVersionString]
+    include_key_in_plist = %w[CFBundleIdentifier QSModifiedDate CFBundleName QSPlugIn]
     @logger = App.require_one :logger
     @writer = App.require_one :output_writer
     @logger.info "Writing default overrides" do
@@ -40,7 +40,20 @@ App.register do
           value = plugin[key]
           result[key] = value if value
         end
-        write_hash(plugin.id, result, data[:qsapp][plugin.id], make_plugin_skeleton(plugin)) if result
+        current_version = (result[:versions] ||= {})[plugin['CFBundleVersion']] ||= { }
+        reqs = plugin.requirements.map { |e| e.to_qsrequirement_entry }
+        current_version['QSRequirements'] = reqs if reqs && !reqs.empty?
+        current_version[:label] = plugin['CFBundleShortVersionString'] if plugin['CFBundleShortVersionString']
+        qsapp_data = data[:qsapp][plugin.id]
+        legacy = ""
+        if qsapp_data && !qsapp_data.empty?
+          qsapp_data = qsapp_data.dup
+          legacy = qsapp_data.delete(:legacy) { "" }
+          template = make_plugin_skeleton(plugin)
+          qsapp_data[:template] = template unless template.empty?
+          result['com.QSApp'] ||= qsapp_data
+        end
+        write_hash(plugin.id, result, legacy) if result
       end
     end
   end
