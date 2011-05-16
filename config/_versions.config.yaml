@@ -1,4 +1,7 @@
 --- 
+# Quicksilver Hex version number to descriptions
+# Evaluate the following ruby line to generate the base64 of "ß60" labels
+#     require 'yaml' ; ver = "60" ; build = "3843" ; puts({:qs_versions => {build => {'label' => "\303\237#{ver}"}}}.to_yaml)
 :qs_versions:
   "3841": # ß58
     osx_min: "1040"
@@ -12,7 +15,6 @@
     osx_min: "1050"
     label: !binary |
       w582MA==
-#require 'yaml' ; ver = "60" ; build = "3843" ; puts({:qs_versions => {build => {'label' => "\303\237#{ver}"}}}.to_yaml)
 :os_versions:
   "1040":
     label: "Mac OS X 10.4"

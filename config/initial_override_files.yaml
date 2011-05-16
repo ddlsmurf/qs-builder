@@ -1,7 +1,9 @@
+# This configuration generates the bootstrap override files
 --- 
 :read_config:
 - _versions.config.yaml
 - _paths.config.yaml
+# Comment the following to skip metadata from the data/ folder (the SQL files and wiki pages)
 :modules:
 - qsapp_source
 :templates: 

@@ -1,9 +1,14 @@
 # Paths are relative to working directory,
 # except :read_config: which is relative to current config file
 ---
+# Folders with bundle.id.{yaml,plist} dictionary files that override
+# bundle dictionary entries
 :override_paths: 
 - overrides/
+# Close to dying - Default plugin list plist output name
 :plist: plugins.plist
+# Paths to search for .qsplugin folders when loading plugins
 :plugin_paths: 
 - ./plugins
+# Prefix applied to all generated wiki page links
 :wiki_prefix: Auto/
