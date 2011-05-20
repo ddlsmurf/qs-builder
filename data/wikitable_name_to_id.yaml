@@ -1,4 +1,17 @@
 --- 
+Mini Bezel: com.blacktree.Quicksilver.Mini_Bezel
+System HotKey Commands: com.blacktree.Quicksilver.QSSymbolicHotKeyPlugIn
+QRCode Plugin: com.ssofts.Quicksilver.QSQRCode
+Eclipse Module: com.bradreynolds.Quicksilver.QSEclipse
+Entourage Module: com.blacktree.Quicksilver.QSEntouragePlugIn
+Remote Hosts: com.skurfer.Quicksilver.RemoteHosts
+Transmit Module: com.blacktree.Quicksilver.QSTransmitModule
+Email Support: com.blacktree.Quicksilver.QSEmailSupport
+WikiWidget Module: com.blacktree.Quicksilver.QSWikitPlugIn
+Stikkit Module: com.blacktree.Quicksilver.QSStikkitPlugIn
+Command Line Tool: com.blacktree.Quicksilver.QSCommandLineTool
+Growl Module: com.blacktree.Quicksilver.QSGrowlPlugIn
+Firefox Module: com.blacktree.Quicksilver.QSFirefoxPlugIn
 # http://lipidity.com/plugins/quicksilver/icongrabber/
 IconGrabber: com.blacktree.Quicksilver.IconGrabber
 # http://lipidity.com/plugins/quicksilver/fumo/
