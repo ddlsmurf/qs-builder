@@ -100,14 +100,11 @@ module QS
     end
     def self.requirements_of plugin
       result = []
-      plug = plugin['QSPlugin']
-      if plug
-        result << Requirement.version(plugin, plug['qsversion'], :qs_min) if plug['qsversion']
-        result << Requirement.version(plugin, plug['version'], :qs_min) if plug['version']
-      end
+      result << Requirement.version(plugin, plugin['qsversion'], :qs_min) if plugin['qsversion']
+      result << Requirement.version(plugin, plugin['version'], :qs_min) if plugin['version']
       reqs = plugin['QSRequirements']
       plugin.report_error "Expected a dict at 'QSRequirements' (got a #{reqs.class.name})" if reqs && !reqs.is_a?(Hash)
-      return [] unless reqs.is_a?(Hash)
+      return result unless reqs.is_a?(Hash)
       reqs.each_pair do |name, val|
         case name
         when "bundles" # Seems ignored – see QSPlugIn.m l: 512
