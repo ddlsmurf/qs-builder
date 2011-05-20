@@ -1,4 +1,43 @@
 module HashExtensions
+  # Descend path in each of the provided hashes. Yield non-nil results.
+  #
+  # e = {}
+  # a = {"hi"=>"hello from a"}
+  # b = {"hi"=>"hello from b"}
+  # c = {"item_a" => {
+  #   :id => 123,
+  #   :properties => {"description" => "Info text"},
+  #   :categories => ["Fun", "Boring"]
+  #   }
+  # }
+  # find_path("hi", a, b, c, e) # => ["hello from a", "hello from b"]
+  # find_path("hi/bye", a, b, c, e) # => []
+  # find_path("item_a/:id", a, b, c, e) # => [123]
+  # find_path("item_a/:properties/description", a, b, c, e) # => ["Info text"]
+  # find_path("item_a/:properties", a, b, c, e) # => [{"description"=>"Info text"}]
+  # find_path("item_a/:categories[1]", a, b, c, e) # => ["Boring"]
+  def self.find_path path, *hashes, &block
+    path = path.split("/") unless path.is_a?(Array)
+    hashes = hashes.select { |e| e }
+    path.each_with_index do |component, i|
+      component_key, *component_indices = component.split("[")
+      if component_key && component_key.length > 0
+        component_key = component_key[1..-1].to_sym if component_key.start_with?(":")
+        hashes = hashes.map { |h| h[component_key] }.select { |e| e }
+      end
+      component_indices.each do |component_index|
+        index = component_index[0..-2].to_i
+        hashes = hashes.map { |h| h[index] }.select { |e| e }
+      end
+    end
+    hashes.each(&block) if block_given?
+    hashes
+  end
+  def self.find_first_path path, *hashes, &filter
+    matches = find_path path, *hashes
+    matches = matches.select(&filter) if block_given?
+    matches.first
+  end
   def self.dup_structure object, &block
     case object
     when Hash
