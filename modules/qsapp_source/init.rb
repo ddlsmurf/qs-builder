@@ -125,6 +125,56 @@ App.register do
   def template_data
     { :qsapp => @qsapp }
   end
+  def find_tags tagname, input
+    result = []
+    input.scan(/<\s*#{tagname}\b([^>]+?)(?:>(.*?)<\/\s*#{tagname}\s*>|\/>)/i) do |attributes|
+      attrs = {}
+      content = $2
+      $1.scan(/([^ =]+)=(?:'([^']+)'|"([^"]+)"|([^ >]+))/i) do |matches|
+        attrs[$1] = matches.drop(2).select {|e| e}.first
+      end
+      result << [attrs, content ? content.strip() : content]
+    end
+    result
+  end
+  def parse_qsapp_plugin_table wikitable_name_to_id
+    plugin_table = load_data_file("qsapp_com_plugins.html")
+    return nil unless plugin_table
+    result = {}
+    find_tags("div", plugin_table).
+      select { |attrs, content| attrs['class'] && attrs['class'].start_with?("box") && !attrs['class']["head"] }.
+      each_slice(3).
+      map do |name, version, updated|
+        links = find_tags("a", name[1])
+        icons = find_tags("img", name[1])
+        icon = (icons.first || [{}]).first['src']
+        entry = {
+          'name' => links.first[1],
+          'download' => links.first[0]['href']
+        }
+        entry['icon'] = icon if icon && icon != "images/noicon.png"
+        entry['updated'] = updated[1] if updated[1].to_s.strip() != "" && updated[1].to_s.strip() != "0000-00-00"
+        entry['version'] = version[1] if version[1].to_s.strip() != ""
+        entry
+      end.
+      each { |entry| result[entry['name']] = entry }
+    compat_by_id = {}
+    id_unknown = {}
+    result.each_pair do |name, entry|
+      id = wikitable_name_to_id[name]
+      unless id
+        id = @qsapp.map {|pluginid, tables| [pluginid, (tables[:legacy] || {})['name']] }.select { |e| e[1] == name }.first
+        id = id.nil? ? nil : id.first
+      end
+      if id
+        compat_by_id[id] = entry
+      else
+        id_unknown[name] = entry
+      end
+    end
+    @logger.warn("Plugins have information in QSApps.com/plugins, but couldn't find their id in data/wikitable_name_to_id.yaml:", *id_unknown.keys) unless id_unknown.empty?
+    compat_by_id
+  end
   def parse_wiki_compat_table plugin_ref
     rows = plugin_ref.split(/\n\|-/).drop(1).map { |e| e.split(/\n\s*[|!]\s*/).drop(1) }
     rows.pop ; rows.shift
@@ -150,9 +200,7 @@ App.register do
     end
     res
   end
-  def read_wiki_compatibility_table
-    wikitable_name_to_id = load_data_file("wikitable_name_to_id.yaml")
-    wikitable_name_to_id = wikitable_name_to_id ? YAML.load(wikitable_name_to_id) : {}
+  def read_wiki_compatibility_table(wikitable_name_to_id)
     compat_table = load_data_file("plugin_reference.txt")
     return nil unless compat_table
     compat_table = parse_wiki_compat_table(compat_table)
@@ -191,16 +239,23 @@ App.register do
   def startup *args
     @logger = App.require_one :logger
     @qsapp = {}
+
+    wikitable_name_to_id = load_data_file("wikitable_name_to_id.yaml")
+    wikitable_name_to_id = wikitable_name_to_id ? YAML.load(wikitable_name_to_id) : {}
+
     blacktree = BunchOTables.new(*%w[blacktr_qsplugin.sql blacktr_qsplugin2.sql]) { |f| load_data_file(f) }
     unless blacktree.empty?
       blacktree = blacktree.merge_into_plugins
       blacktree.each_pair { |name, val| (@qsapp[name] ||= {})[:legacy] = val }
     end
-    if wiki = read_wiki_compatibility_table
+    if wiki = read_wiki_compatibility_table(wikitable_name_to_id)
       wiki.each_pair { |name, val| (@qsapp[name] ||= {})[:wiki] = val }
     end
     if repos = read_plugin_repository_locations
       repos.each_pair { |name, val| (@qsapp[name] ||= {})[:repository] = val }
+    end
+    if plugin_table = parse_qsapp_plugin_table(wikitable_name_to_id)
+      plugin_table.each_pair { |name, val| (@qsapp[name] ||= {})[:info] = val }
     end
   end
 end
