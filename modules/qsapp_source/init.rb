@@ -152,7 +152,7 @@ App.register do
           'name' => links.first[1],
           'download' => links.first[0]['href']
         }
-        entry['icon'] = icon if icon && icon != "images/noicon.png"
+        entry['icon'] = "http://qsapp.com/plugins/#{icon}" if icon && icon != "images/noicon.png"
         entry['updated'] = updated[1] if updated[1].to_s.strip() != "" && updated[1].to_s.strip() != "0000-00-00"
         entry['version'] = version[1] if version[1].to_s.strip() != ""
         entry

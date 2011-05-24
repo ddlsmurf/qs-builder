@@ -1,4 +1,5 @@
 App.register do
+  include VersionHelpers
   def write_hash name, *items
     @writer.write_to_output(name + ".yaml") do |f|
       items.each do |e|
@@ -35,7 +36,15 @@ App.register do
     return unless value
     previous = hash[key]
     if previous
-      (hash["#{key}_alt"] ||= []) << value
+      if previous.is_a?(Array) && value.is_a?(Array)
+        value = value - previous
+        return if value.empty?
+      end
+      alternatives = (hash["#{key}_alt"] ||= [])
+      alternatives << value
+      if previous.is_a?(Array) && alternatives.all? { |a| a.is_a?(Array) }
+        hash["#{key}_uniq"] = Array(alternatives.flatten + previous).uniq
+      end
     else
       hash[key] = value
     end
@@ -59,6 +68,25 @@ App.register do
     end
     self.class.add_key_or_alternative(output, 'QSRequirements', requirements) unless requirements.nil? || requirements.empty?
   end
+  def get_requirements_from_wiki wiki
+    if wiki[:qs_compat]
+      reqs = wiki[:qs_compat].scan(/\303\237([0-9]+)/).map do |w|
+        ver = @config[:qs_versions].select { |e, v| v['label'] == "\303\237#{$1}" }.first
+        if ver
+          QS::Requirement.version(nil, ver[0], :qs_min).to_qsrequirement_entry
+        end
+      end
+      wiki[:qs_compat_reqs_template] = reqs unless reqs.empty?
+    end
+    if wiki[:os_compat]
+      reqs = wiki[:os_compat].scan(/[0-9.]+/).map do |w|
+        QS::Requirement.version(nil,
+          hex_from_version(osx_version_from_label(w)),
+          :osx_min).to_qsrequirement_entry
+      end
+      wiki[:os_compat_reqs_template] = reqs unless reqs.empty?
+    end
+  end
   def add_plugin_version output, plugin, qs_app
     version_id = plugin['CFBundleVersion']
     if !version_id || version_id.strip.length == 0
@@ -69,9 +97,11 @@ App.register do
     current_version = (versions[version_id] ||= {})
     copy_legacy_version current_version, plugin, plugin.requirements.map { |r| r.to_qsrequirement_entry }
     if info = qs_app[:info]
-      if info['version'] == version_id && info['updated']
-        self.class.add_key_or_alternative(output, 'QSModifiedDate', "#{info['updated']} 00:00:00 +0000")
+      if info['version'] && info['updated']
+        existing = (versions[info['version']] ||= {})
+        self.class.add_key_or_alternative(existing, 'QSModifiedDate', "#{info['updated']} 00:00:00 +0000")
       end
+      self.class.add_key_or_alternative(output['QSPlugIn'] ||= {}, 'webIcon', info['icon']) if info['icon']
     end
     legacy = qs_app[:legacy]
     copy_legacy_version(current_version, legacy) if legacy
@@ -91,7 +121,10 @@ App.register do
     add_plugin_version result, plugin, qs_app
     template = plugin ? make_plugin_skeleton(plugin) : []
     qsapp_data = (result['com.QSApp'] ||= {})
-    qsapp_data['wiki'] = qs_app[:wiki] if qs_app[:wiki]
+    if wiki = qs_app[:wiki]
+      get_requirements_from_wiki(qs_app[:wiki])
+      qsapp_data['wiki'] = wiki
+    end
     qsapp_data['info'] = qs_app[:info] if qs_app[:info]
     qsapp_data['template'] = template unless template.empty?
     legacy = qs_app[:legacy]
@@ -100,7 +133,9 @@ App.register do
       ':author/author_name' => 'author',
       ':author/author_url' => 'author_url',
       'image' => 'webIcon',
-      ':repository' => 'repository_url'
+      ':repository' => 'repository_url',
+      ':categories' => 'categories',
+      ':related' => 'relatedBundles',
     }.each_pair do |source_path, dest_key|
       HashExtensions.find_path(source_path, qsapp_data, qs_app, legacy) do |v|
         self.class.add_key_or_alternative(qsplugin, dest_key, v)
@@ -109,6 +144,7 @@ App.register do
     result
   end
   def run_template data
+    @config = data[:config]
     @logger = App.require_one :logger
     @writer = App.require_one :output_writer
     @logger.info "Writing default overrides" do

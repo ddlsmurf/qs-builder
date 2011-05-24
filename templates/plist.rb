@@ -1,6 +1,6 @@
 App.register do
   def run_template data
-    include_key_in_plist = %w[CFBundleIdentifier QSModifiedDate CFBundleName CFBundleVersion QSPlugIn QSRequirements CFBundleShortVersionString]
+    include_key_in_plist = %w[CFBundleIdentifier CFBundleName QSPlugIn QSRequirements QSPluginVersions]
     @logger = App.require_one :logger
     @logger.info "Writing update plist files" do
       dicos = data[:bundles].map do |plugin|
