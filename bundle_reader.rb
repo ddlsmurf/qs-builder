@@ -20,6 +20,7 @@ require "lib/qs"
 require "helpers/helpers"
 require "helpers/templatedata_helpers"
 require "helpers/url_helpers"
+require "helpers/version_helpers"
 
 BUNDLE_RESOURCES_TO_MERGE = %w[ResourceLocations.plist QSKindDescriptions.plist QSRegistration.plist
   QSAction.name.strings QSAction.commandFormat.strings QSAction.description.strings
@@ -186,6 +187,7 @@ class RenderContext
   include Helpers
   include URLHelpers
   include TemplateDataHelpers
+  include VersionHelpers
 end
 
 App.register do # Template loader

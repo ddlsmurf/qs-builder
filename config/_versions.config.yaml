@@ -16,9 +16,6 @@
     label: !binary |
       w582MA==
 :os_versions:
-  "1040":
-    label: "Mac OS X 10.4"
-  "1050":
-    label: "Mac OS X 10.5"
-  "1060":
-    label: "Mac OS X 10.6"
+  - "1040"
+  - "1050"
+  - "1060"
